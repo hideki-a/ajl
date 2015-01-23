@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<title>CurrentNav</title>
+<style>
+body{
+	margin: 0 10px;
+	padding: 0;
+}
+</style>
+</head>
+
+<body class="results">
+<ul class="nav-global" itemscope="itemscope" itemtype="http://www.schema.org/SiteNavigationElement">
+<li itemprop="name" class="service"><a itemprop="url" href="/service/">サービス</a></li>
+<li itemprop="name" class="our_work"><a itemprop="url" href="/our_work/">実績紹介</a></li>
+<li itemprop="name" class="knowledge"><a itemprop="url" href="/samples/current_nav.html">ナレッジ</a></li>
+<li itemprop="name" class="seminar"><a itemprop="url" href="/seminar/">セミナー</a></li>
+<li itemprop="name" class="news"><a itemprop="url" href="/news/">ニュース</a></li>
+<li itemprop="name" class="company"><a itemprop="url" href="/company/">会社情報</a></li>
+<li itemprop="name" class="careers"><a itemprop="url" href="/careers/">採用情報</a></li>
+</ul>
+
+<script src="../src/ajl.core.js"></script>
+<script src="../src/ajl.currentnav.js"></script>
+<script>
+ajl.enable.currentNav(".nav-global", { replace: true });
+</script>
+</body>
+</html>
