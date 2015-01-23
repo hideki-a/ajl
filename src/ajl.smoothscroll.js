@@ -21,7 +21,7 @@ ajl.SmoothScroll = function (elem, options) {
     };
 
     this.options = ajl.util.deepExtend({}, this.defaults, options);
-}
+};
 
 ajl.SmoothScroll.prototype = {
     startScroll: function () {

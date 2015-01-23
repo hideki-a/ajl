@@ -24,12 +24,12 @@ ajl.enable = {};
 // ----------------------------------------------------------------------------
 ajl.webAPI = {
     rAF: (function () {
-        return ajl.rAF = window.requestAnimationFrame =
-                window.requestAnimationFrame || 
-                window.webkitRequestAnimationFrame || 
-                function (callback) {
-                    window.setTimeout(callback, 16.66666);
-                };
+        window.requestAnimationFrame =
+            window.requestAnimationFrame || 
+            window.webkitRequestAnimationFrame || 
+            function (callback) {
+                window.setTimeout(callback, 16.66666);
+            };
     }())
 };
 
