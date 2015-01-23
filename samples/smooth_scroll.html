@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<title>SmoothScroll</title>
+<style>
+body{
+	margin: 0 10px;
+	padding: 0;
+}
+
+div{
+	margin: 0;
+	padding: 0;
+}
+
+h1{
+	margin: 0 0 1em;
+}
+
+.area-middle{
+	margin-top: 1000px;
+}
+
+.site-footer{
+	margin-top: 2000px;
+}
+</style>
+</head>
+
+<body class="results">
+<div id="pagetop" class="container">
+<div class="site-header">
+<h1>SmoothScroll</h1>
+<div><a href="#pagemiddle">ページの中間へ</a></div>
+<div><a href="#pagebottom">ページの最下部へ</a></div>
+<div><a href="test.html">test.html</a></div>
+<div><a href="#noid">実在しないIDを指定</a></div>
+</div>
+
+<div id="pagemiddle" class="area-middle">
+<div><a href="#pagetop">ページの先頭へ</a></div>
+<div><a href="#pagebottom">ページの最下部へ</a></div>
+<div><a href="#tab_test">タブの例</a></div>
+</div>
+
+<div id="pagebottom" class="site-footer">
+<div><a href="http://www.google.co.jp">Google inc.</a></div>
+<div><a href="#pagetop">ページの先頭へ</a></div>
+<div><a href="#pagemiddle">ページの中間へ</a></div>
+</div>
+</div>
+
+<script src="../src/ajl.core.js"></script>
+<script src="../src/ajl.smoothscroll.js"></script>
+<script>
+ajl.enable.smoothScroll("a[href^='#']", { moveFocus: true, pagetopId: "pagetop" });
+</script>
+</body>
+</html>
