@@ -1,0 +1,22 @@
+{
+  "name": "ajl",
+  "version": "1.0.0",
+  "description": "JavaScript Library",
+  "main": "gulpfile.coffee",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hideki Abe",
+  "license": "MIT",
+  "devDependencies": {
+    "coffee-script": "^1.8.0",
+    "connect": "^3.3.4",
+    "gulp": "^3.8.10",
+    "gulp-livereload": "^3.5.0",
+    "gulp-load-plugins": "^0.8.0",
+    "serve-static": "^1.8.1",
+    "connect-livereload": "^0.5.2",
+    "tiny-lr": "^0.1.4",
+    "gulp-jshint": "^1.9.0"
+  }
+}
