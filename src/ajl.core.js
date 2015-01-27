@@ -38,7 +38,7 @@ ajl.webAPI = {
 // ユーティリティ
 // ----------------------------------------------------------------------------
 ajl.util = {
-    capitalize: function (str) {
+    decapitalize: function (str) {
         return str.charAt(0).toLowerCase() + str.slice(1);
     },
 
@@ -93,7 +93,7 @@ ajl.util = {
     },
 
     createRunner: function (newObjName) {
-        ajl.enable[ajl.util.capitalize(newObjName)] = ajl.util.getRunner(ajl[newObjName]);
+        ajl.enable[ajl.util.decapitalize(newObjName)] = ajl.util.getRunner(ajl[newObjName]);
     }
 };
 
