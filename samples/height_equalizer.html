@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ajl Height Equalizer Demo</title>
+<style>
+ul,
+li{
+    margin: 0;
+    padding: 0;
+}
+
+ul{
+    list-style: none;
+}
+
+.list-u-01{
+    width: 520px;
+}
+
+.list-u-01 li{
+    float: left;
+    margin: 0 20px 20px 0;
+    padding: 5px;
+    border: 1px solid #999;
+    width: 148px;
+    /*box-sizing: border-box;*/
+}
+
+.list-u-01 li:nth-child(3n){
+    margin-right: 0;
+}
+
+.list-u-01:before,
+.list-u-01:after{
+    display: table;
+    content: " ";
+}
+
+.list-u-01:after{
+    clear: both;
+}
+</style>
+<script>
+// window.addEventListener("load", function () {
+//     setTimeout(function () {
+//         document.getElementsByTagName("body")[0].style.fontSize = "20px";
+//     }, 2000);
+// });
+</script>
+</head>
+<body>
+<h1>ajl Height Equalizer Demo</h1>
+
+<h2>Basic</h2>
+<ul class="list-u-01 js-demo-01">
+<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, temporibus, cupiditate, est minus enim maiores pariatur magnam ratione deleniti itaque placeat at error consectetur. Suscipit.</li>
+<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </li>
+<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, temporibus, cupiditate, est minus enim maiores pariatur magnam ratione deleniti </li>
+<li>Lorem ipsum dolor sit amet</li>
+<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, </li>
+<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, temporibus, cupiditate, est minus enim maiores pariatur magnam ratione.</li>
+<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, temporibus.</li>
+<li>Lorem ipsum dolor sit amet, consectetur.</li>
+</ul>
+
+<h2>Grouping Equalize</h2>
+<ul class="list-u-01 js-demo-02">
+<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, temporibus, cupiditate, est minus enim maiores pariatur magnam ratione deleniti itaque placeat at error consectetur. Suscipit.</li>
+<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </li>
+<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, temporibus, cupiditate, est minus enim maiores pariatur magnam ratione deleniti </li>
+<li>Lorem ipsum dolor sit amet</li>
+<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, </li>
+<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, temporibus, cupiditate, est minus enim maiores pariatur magnam ratione.</li>
+<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, temporibus.</li>
+<li>Lorem ipsum dolor sit amet, consectetur.</li>
+</ul>
+
+<script src="../src/ajl.core.js"></script>
+<script src="../src/ajl.heightequalizer.js"></script>
+<script>
+ajl.enable.heightEqualizer(".js-demo-01");
+ajl.enable.heightEqualizer(".js-demo-02", { groupBy: 3 });
+</script>
+</body>
+</html>

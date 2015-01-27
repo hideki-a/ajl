@@ -122,7 +122,20 @@ ajl.event = {
         } else if (elem.dettachEvent) {
             elem.detachEvent("on" + type, listener);
         }
-    }
+    },
+
+    trigger: function (elem, type, data) {
+        var e,
+            detailObj = {};
+
+        if (data) {
+            detailObj.detail = data; 
+        }
+
+        e = document.createEvent("CustomEvent");
+        e.initCustomEvent(type, true, true, data);
+        elem.dispatchEvent(e);
+    } 
 };
 
 // ------------------------------------
@@ -137,5 +150,29 @@ ajl.event.add(window, "unload", function () {
         ajl.event.remove.apply(ajl.event, stacks[s]);
     }
 });
+
+
+// ----------------------------------------------------------------------------
+// スタイル
+// ----------------------------------------------------------------------------
+ajl.style = {
+    getPropValue: function (elem, property) {
+        var style = getComputedStyle(elem);
+
+        return style[property];
+    },
+
+    getOuterHeight: function (elem, containMargin) {
+        var height = elem.offsetHeight,
+            style;
+
+        if (containMargin) {
+            style = getComputedStyle(elem);
+            height += parseInt(style.marginTop) + parseInt(style.marginBottom);
+        }
+
+        return height + "px";
+    }
+};
 
 }(window, document));
