@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<title>ajl Samples</title>
+<style>
+body{
+	margin: 0 10px;
+	padding: 0;
+}
+</style>
+</head>
+
+<body class="results">
+<h1>ajl Samples</h1>
+<p>MJLやbajlを参考にして開発したライブラリ。IE9+対応・jQuery非依存。coreと必要なプラグインをconcat・minifyして使うと良いです。</p>
+<ul>
+<li><a href="height_equalizer.html">要素の高さ揃え</a></li>
+<li><a href="current_nav.html">ナビゲーションリストの現在地をアクティブにする</a></li>
+<li><a href="smooth_scroll.html">ページ内リンクをスムーズにスクロールする</a></li>
+<li><a href="social_buttons.html">ソーシャルボタンのロード</a></li>
+</ul>
+
+<p>以下のコードでプラグインが実行されます。</p>
+<pre><code>&lt;script&gt;
+ajl.enable.pluginName(&quot;.class-name&quot;, { option: optionValue });
+&lt;/script&gt;
+</code></pre>
+
+<script src="../src/ajl.core.js"></script>
+<script src="../src/ajl.currentnav.js"></script>
+</body>
+</html>
