@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<title>ajl SocialButtons</title>
+<style>
+body{
+	margin: 0 10px;
+	padding: 0;
+}
+
+#fb-root{
+	overflow: hidden;
+	width: 100%;
+}
+
+#fb-root div{
+	left: -10000px;
+}
+
+#socialbox{
+	*display: none;
+	margin: 1500px 0 20px;
+}
+
+#socialbox li{
+	float: left;
+	margin: 0 20px 10px 0;
+	padding: 0;
+	height: 24px;
+	list-style: none;
+}
+
+#socialbox li *{
+	vertical-align: baseline !important;
+}
+
+#socialbox .twitter-share-button{
+	width: 98px !important;
+}
+
+#socialbox .fb-like{
+	width: 102px !important;
+}
+
+#socialbox #___plusone_0{
+	width: 65px !important;
+}
+</style>
+</head>
+
+<body class="results">
+<h1>ajl SocialButtons</h1>
+<p>画面をスクロールすると、ソーシャルボタンが読み込まれます。<br>
+現在ダミーのURLが設定してあるため、Likeボタンは正しく動作しません。</p>
+<div id="socialbox" class="js-socialbuttns">
+<ul>
+<li><a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja">ツイート</a></li>
+<li><div class="fb-like" data-href="http://localhost/samples/social_buttons.html" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div></li>
+<li><div class="g-plusone" data-href="http://localhost/samples/social_buttons.html" data-size="medium"></div></li>
+<li><a href="http://b.hatena.ne.jp/entry/http://localhost/samples/social_buttons.html" class="hatena-bookmark-button" data-hatena-bookmark-title="SocialButtons" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20"></a></li>
+<li><a href="#" onclick="Evernote.doClip({contentId:'main',providerName:'Hideki Abe'}); return false;"><img src="http://static.evernote.com/article-clipper-jp.png" alt="Clip to Evernote"></a></li>
+</ul>
+</div>
+
+<script src="../src/ajl.core.js"></script>
+<script src="../src/ajl.socialbuttons.js"></script>
+<script>
+ajl.enable.socialButtons(".js-socialbuttns", { fbAppId: null });
+</script>
+</body>
+</html>
