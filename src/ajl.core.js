@@ -76,6 +76,25 @@ ajl.util = {
         };
     },
 
+    addClass: function (elem, className) {
+        if (elem.classList) {
+            elem.classList.add(className);
+        } else {
+            elem.className += " " + className;
+        }
+    },
+
+    removeClass: function (elem, className) {
+        if (elem.classList) {
+            elem.classList.remove(className);
+        } else {
+            el.className.replace(
+                new RegExp("(^|\\b)" + className.split(" ").join("|") + "(\\b|$)", "gi"),
+                " "
+            );
+        }
+    },
+
     getRunner: function (NewObj) {
         return function (className, options) {
             var elems = document.querySelectorAll(className),

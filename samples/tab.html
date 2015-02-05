@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<title>ajl Tab</title>
+<style>
+body{
+	margin: 0 10px;
+	padding: 0;
+}
+
+.tab-enabled .tablist,
+.tab-enabled .tablist li{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.tab-enabled .tablist{
+	padding: 0 10px;
+	border-bottom: 1px solid #999;
+}
+
+.tab-enabled .tablist li{
+	display: inline-block;
+	margin: 0 5px -1px 0;
+}
+
+.tab-enabled a{
+	text-decoration: none;
+}
+
+.tab-enabled .tablist a{
+	display: block;
+	padding: 5px 11px;
+}
+
+.tab-enabled .tablist .active a{
+	padding: 5px 10px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #999 #999 #fff;
+	border-radius: 3px 3px 0 0;
+	color: #000;
+	cursor: default;
+}
+
+.tab-enabled .tabs article{
+	display: none;
+}
+
+.tab-enabled .tabs article.active{
+	display: block;
+	-webkit-animation: fadeInFromNone 0.66s;
+	animation: fadeInFromNone 0.66s;
+}
+
+@-webkit-keyframes fadeInFromNone{
+	0%{
+		display: none; 
+		opacity: 0;
+	}
+
+	1%{
+		display: block; 
+		opacity: 0;
+	}
+
+	100%{
+		display: block; 
+		opacity: 1;
+	}
+}
+
+@keyframes fadeInFromNone{
+	0%{
+		display: none; 
+		opacity: 0;
+	}
+
+	1%{
+		display: block; 
+		opacity: 0;
+	}
+
+	100%{
+		display: block; 
+		opacity: 1;
+	}
+}
+</style>
+</head>
+
+<body class="results">
+<h1>ajl Tab</h1>
+
+<div class="tabsample js-tab">
+<ul class="tablist"><!--
+--><li><a href="#html">HTML文書の設計</a></li><!--
+--><li><a href="#stylesheet">スタイルシートの設計</a></li><!--
+--><li><a href="#javascript">JavaScriptの設計</a></li><!--
+--></ul>
+
+<div class="tabs">
+<article id="html">
+<h2>HTML文書の設計</h2>
+<p>サイトの各ページを構成するHTML文書について、また文書に記載する情報についてルールを定めています。</p>
+</article>
+
+<article id="stylesheet">
+<h2>スタイルシートの設計</h2>
+<p>スタイルシートを記述するにあたり必要なルールを定めています。なお、サイト構築フェーズでは<a href="http://sass-lang.com/">Sass</a>を用いることとします。運用フェーズにおけるSassの利用は、関係者協議の上決定します。</p>
+</article>
+
+<article id="javascript">
+<h2>JavaScriptの設計</h2>
+<p>さまざまなふるまいの実現のために用いるJavaScriptの実装ルールを定めています。</p>
+</article>
+</div><!-- /.tabs -->
+</div><!-- /.tabsample -->
+
+<script src="../src/ajl.core.js"></script>
+<script src="../src/ajl.tab.js"></script>
+<script>
+ajl.enable.tab(".js-tab");
+</script>
+</body>
+</html>
