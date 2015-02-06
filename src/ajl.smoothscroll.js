@@ -15,6 +15,7 @@ ajl.SmoothScroll = function (elem, options) {
     this.direction = null;
     this.defaults = {
         excludeCond: /tab_/,
+        paddingTop: 0,
         v: 20,    // The value which influences speed.
         moveFocus: false,    // 試験実装中のため
         pagetopId: "header"
@@ -29,7 +30,7 @@ ajl.SmoothScroll.prototype = {
             viewportHeight = document.documentElement.clientHeight;
 
         this.start = window.pageYOffset || document.documentElement.scrollTop;
-        this.dest = this.targetElem.offsetTop;
+        this.dest = this.targetElem.offsetTop - this.options.paddingTop;
 
         if (documentHeight - viewportHeight < this.dest) {
             this.dest = documentHeight - viewportHeight;

@@ -53,11 +53,10 @@ div{
 </nav>
 
 <div class="container">
-<div class="page-header">
+<div id="pagetop" class="page-header">
 <h1>ajl SmoothScroll</h1>
 </div><!-- /.page-header -->
 
-<div id="pagetop">
 <div class="site-header">
 <div><a href="#pagemiddle">ページの中間へ</a></div>
 <div><a href="#pagebottom">ページの最下部へ</a></div>
@@ -76,7 +75,6 @@ div{
 <div><a href="#pagetop">ページの先頭へ</a></div>
 <div><a href="#pagemiddle">ページの中間へ</a></div>
 </div>
-</div>
 </div><!-- /.container -->
 
 <footer role="contentinfo" class="docs-footer">
@@ -87,7 +85,11 @@ div{
 <script src="../src/ajl.core.js"></script>
 <script src="../src/ajl.smoothscroll.js"></script>
 <script>
-ajl.enable.smoothScroll("a[href^='#']", { moveFocus: true, pagetopId: "pagetop" });
+ajl.enable.smoothScroll("a[href^='#']", {
+    paddingTop: 70,
+    moveFocus: true,
+    pagetopId: "pagetop"
+});
 </script>
 
 <!-- for Bootstrap Theme's scripts -->
