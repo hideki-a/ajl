@@ -23,6 +23,7 @@ AUTOPREFIXER_BROWSERS = [
 gulp = require 'gulp'
 path = require 'path'
 plugins = require('gulp-load-plugins')()
+jshintStylish = require 'jshint-stylish'
 
 # LiveReload
 # http://rhumaric.com/2014/01/livereload-magic-gulp-style/
@@ -64,7 +65,19 @@ gulp.task 'styles', ->
 gulp.task 'jshint', ->
     gulp.src PATHS.SCRIPTS.SRC + '*.js'
         .pipe plugins.jshint()
-        .pipe plugins.jshint.reporter('default')
+        .pipe plugins.jshint.reporter(jshintStylish)
+        .pipe plugins.notify((file) ->
+            # http://stackoverflow.com/questions/22787673/gulp-sass-error-with-notify#answer-23115547
+            if file.jshint.success
+                # Don't show something if success
+                return false
+            errors = file.jshint.results.map((data) ->
+                if data.error
+                    return '(' + data.error.line + ':' + data.error.character + ') ' + data.error.reason
+                return
+            ).join('\n')
+            file.relative + ' (' + file.jshint.results.length + ' errors)\n' + errors
+        )
 
 gulp.task 'watch', ->
     gulp.watch PATHS.STATIC.SRC + '*.html', notifyLiveReload
