@@ -1,6 +1,6 @@
 'use strict';
 
-# Path Settings
+# Settings
 BASEPATH = './'
 PATHS =
     STATIC:
@@ -11,7 +11,6 @@ PATHS =
         SRC: BASEPATH + 'samples/_scss/'
         DEST: BASEPATH + 'samples/css/'
 PORT = '3501'
-LIVERELOAD_PORT = 35729
 AUTOPREFIXER_BROWSERS = [
     'last 2 versions'
     'IE >= 8'
@@ -19,36 +18,21 @@ AUTOPREFIXER_BROWSERS = [
     'Android >= 4.1'
 ]
 
-# Read Modules
+# Load Modules
 gulp = require 'gulp'
 path = require 'path'
 plugins = require('gulp-load-plugins')()
+browserSync = require 'browser-sync'
+reload = browserSync.reload
 jshintStylish = require 'jshint-stylish'
 
-# LiveReload
-# http://rhumaric.com/2014/01/livereload-magic-gulp-style/
-notifyLiveReload = (e) ->
-    filename = path.relative(__dirname, e.path)
-    tinylr.changed body:
-        files: [filename]
-    return
-
-tinylr = undefined
-
 # Tasks
-gulp.task 'livereload', ->
-    tinylr = require('tiny-lr')()
-    tinylr.listen LIVERELOAD_PORT
-    return
-
-gulp.task 'serve', ->
-    connect = require 'connect'
-    serveStatic = require 'serve-static'
-    app = connect()
-
-    app.use require('connect-livereload')(port: LIVERELOAD_PORT)
-    app.use serveStatic __dirname
-    app.listen PORT
+gulp.task 'browser-sync', ->
+    browserSync
+        server:
+            baseDir: BASEPATH
+        port: PORT
+        browser: "google chrome"
     return
 
 gulp.task 'styles', ->
@@ -80,16 +64,12 @@ gulp.task 'jshint', ->
         )
 
 gulp.task 'watch', ->
-    gulp.watch PATHS.STATIC.SRC + '*.html', notifyLiveReload
-    gulp.watch PATHS.STYLES.SRC + '*.scss', ['styles']
-    stylewatcher = gulp.watch PATHS.STYLES.DEST + '*.css'
-    jswatcher = gulp.watch PATHS.SCRIPTS.SRC + '*.js', ['jshint']
-    jswatcher.on 'change', notifyLiveReload
-    stylewatcher.on 'change', notifyLiveReload
+    gulp.watch PATHS.STATIC.SRC + '*.html', browserSync.reload
+    gulp.watch PATHS.STYLES.SRC + '*.scss', ['styles', browserSync.reload]
+    gulp.watch PATHS.SCRIPTS.SRC + '*.js', ['jshint', browserSync.reload]
     return
 
 gulp.task 'default', [
-    'livereload'
-    'serve'
+    'browser-sync'
     'watch'
 ]

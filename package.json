@@ -9,6 +9,7 @@
   "author": "Hideki Abe",
   "license": "MIT",
   "devDependencies": {
+    "browser-sync": "^2.0.0-rc8",
     "coffee-script": "^1.8.0",
     "connect": "^3.3.4",
     "connect-livereload": "^0.5.2",
