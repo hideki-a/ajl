@@ -5,12 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="format-detection" content="telephone=no">
 <title>ajl Tab</title>
+<link rel="stylesheet" href="css/basic.css">
 <style>
-body{
-	margin: 0 10px;
-	padding: 0;
-}
-
 .tab-enabled .tablist,
 .tab-enabled .tablist li{
 	margin: 0;
@@ -93,8 +89,40 @@ body{
 </style>
 </head>
 
-<body class="results">
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" href="./">ajl</a>
+</div>
+<div id="navbar" class="collapse navbar-collapse">
+<ul class="nav navbar-nav">
+<li><a href="./">Home</a></li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Plugins <span class="caret"></span></a>
+<ul class="dropdown-menu" role="menu">
+<li><a href="height_equalizer.html">要素の高さ揃え</a></li>
+<li><a href="tab.html">タブ</a></li>
+<li><a href="current_nav.html">ナビゲーションリストの現在地をアクティブにする</a></li>
+<li><a href="smooth_scroll.html">ページ内リンクをスムーズにスクロールする</a></li>
+<li><a href="social_buttons.html">ソーシャルボタンのロード</a></li>
+</ul>
+</li>
+</ul>
+</div><!--/.nav-collapse -->
+</div>
+</nav>
+
+<div class="container">
+<div class="page-header">
 <h1>ajl Tab</h1>
+</div><!-- /.page-header -->
 
 <div class="tabsample js-tab">
 <ul class="tablist"><!--
@@ -120,11 +148,21 @@ body{
 </article>
 </div><!-- /.tabs -->
 </div><!-- /.tabsample -->
+</div><!-- /.container -->
 
+<footer role="contentinfo" class="docs-footer">
+<p>Code licensed under <a href="http://opensource.org/licenses/MIT" target="_blank">MIT</a>, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+</footer>
+
+<!-- load ajl -->
 <script src="../src/ajl.core.js"></script>
 <script src="../src/ajl.tab.js"></script>
 <script>
 ajl.enable.tab(".js-tab");
 </script>
+
+<!-- for Bootstrap Theme's scripts -->
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 </body>
 </html>
