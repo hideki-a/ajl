@@ -166,8 +166,20 @@ ajl.event = {
     },
 
     remove: function (elem, type, listener, useCapture) {
+        var events = [],
+            nEvents,
+            i;
+
         if (elem.removeEventListener) {
-            elem.removeEventListener(type, listener, useCapture);
+            if (type.indexOf(",") > -1) {
+                events = type.split(",");
+                for (i = 0, nEvents = events.length; i < nEvents; i += 1) {
+                    // Support IE9+
+                    elem.removeEventListener(events[i].trim(), listener, useCapture);
+                }
+            } else {
+                elem.removeEventListener(type, listener, useCapture);
+            }
         } else if (elem.dettachEvent) {
             elem.detachEvent("on" + type, listener);
         }
