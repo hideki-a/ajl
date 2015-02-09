@@ -21,6 +21,7 @@
 	position: relative;
 	display: inline-block;
 	border-right: 1px solid #cccccc;
+	vertical-align: top;
 	width: 157px;
 	font-weight: bold;
 }
@@ -53,15 +54,21 @@
 }
 
 .nav-global li ul {
-	position: absolute;
-	top: 45px;
-	left: -10px;
+	position: relative;
+	top: 10px;
 	z-index: 11;
-	display: none;
-	width: 176px;
+	width: 157px;
 	background-color: #67cbc1;
 	padding: 2px;
 	text-align: left;
+}
+
+.nav-global .ajl-menu-enabled li ul{
+	position: absolute;
+	top: 45px;
+	left: -10px;
+	display: none;
+	width: 176px;
 }
 
 .nav-global li ul.active {
@@ -91,8 +98,12 @@
 	margin-bottom: 2px;
 	padding: 0;
 	border-right-width: 0;
-	width: 172px;
+	width: 153px;
 	font-weight: normal;
+}
+
+.nav-global .ajl-menu-enabled li li{
+	width: 172px;
 }
 
 .nav-global li li:last-child {
