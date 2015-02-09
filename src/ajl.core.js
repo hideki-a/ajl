@@ -124,8 +124,21 @@ ajl.event = {
     _stack: [],
 
     add: function (elem, type, listener, useCapture) {
+        var events = [],
+            nEvents,
+            i;
+
         if (elem.addEventListener) {
-            elem.addEventListener(type, listener, useCapture);
+            if (type.indexOf(",") > -1) {
+                events = type.split(",");
+                for (i = 0, nEvents = events.length; i < nEvents; i += 1) {
+                    // String.prototype.trim(): IE9+
+                    // See Also: https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/String/trim
+                    elem.addEventListener(events[i].trim(), listener, useCapture);
+                }
+            } else {
+                elem.addEventListener(type, listener, useCapture);
+            }
         } else if (elem.attachEvent) {
             elem.attachEvent("on" + type, listener);
         }
