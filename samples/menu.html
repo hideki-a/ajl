@@ -146,6 +146,10 @@
 	background-color: #67cbc1;
 	color: #fff;
 }
+
+.mod-destory{
+	margin-bottom: 30px;
+}
 </style>
 </head>
 
@@ -184,6 +188,10 @@
 <div class="page-header">
 <h1>ajl Menu</h1>
 </div><!-- /.page-header -->
+
+<div class="mod-destory">
+<button id="btn_destory">Destory</button> <button id="btn_reinit">Re Init</button>
+</div>
 
 <nav id="menu" role="navigation" class="nav-global">
 <ul class="js-menu"><!--
@@ -224,7 +232,15 @@
 <script src="../src/ajl.core.js"></script>
 <script src="../src/ajl.menu.js"></script>
 <script>
-ajl.enable.menu(".js-menu");
+var objMenu = ajl.enable.menu(".js-menu");
+var btnDestory = document.getElementById("btn_destory");
+var btnReInit = document.getElementById("btn_reinit");
+btnDestory.addEventListener("click", function () {
+    objMenu[0].destory();
+}, false);
+btnReInit.addEventListener("click", function () {
+    objMenu[0].init();
+}, false);
 </script>
 
 <!-- for Bootstrap Theme's scripts -->

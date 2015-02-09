@@ -30,7 +30,7 @@ ajl.Menu.prototype = {
     },
 
     hideMenu: function () {
-        if (this.stack.length) {
+        if (this.stack.length > 0) {
             this.timerId = setTimeout(ajl.util.proxy(this, function () {
                 var openMenu = this.stack.shift();
 
@@ -45,7 +45,7 @@ ajl.Menu.prototype = {
         var targetMenu = e.target.nextElementSibling,
             openMenu;
 
-        if (this.stack.length) {
+        if (this.stack.length > 0) {
             this.clearTimer();
             openMenu = this.stack.shift();
             openMenu.classList.remove(this.options.activeClassName);
@@ -96,6 +96,72 @@ ajl.Menu.prototype = {
     },
 
     destory: function () {
+        var i,
+            j,
+            nItems,
+            menuItems,
+            subMenu,
+            subMenuItems,
+            nSubMenuItems,
+            menuId = 0;
+
+        ajl.util.removeClass(this.elem, "ajl-menu-enabled");
+        menuItems = this.options.collect(this.generateId);
+        this.elem.id = "";
+        this.stack = [];
+
+        for (i = 0, nItems = menuItems.length; i < nItems; i += 1) {
+            subMenu = menuItems[i].nextElementSibling;
+
+            ajl.event.remove(
+                menuItems[i],
+                "mouseover, focus",
+                this.showMenu,
+                false
+            );
+
+            if (subMenu) {
+                menuItems[i].removeAttribute("aria-haspopup");
+                subMenu.removeAttribute("tabindex");
+                subMenu.removeAttribute("aria-expanded");
+                subMenu.removeAttribute("aria-hidden");
+                ajl.event.remove(
+                    menuItems[i],
+                    "mouseout, blur",
+                    this.hideMenu,
+                    false
+                );
+                ajl.event.remove(
+                    menuItems[i],
+                    "keydown",
+                    this.keydownEventHandler,
+                    false
+                );
+                ajl.event.remove(
+                    subMenu,
+                    "mouseover, focus",
+                    this.clearTimer,
+                    false
+                );
+                ajl.event.remove(
+                    subMenu,
+                    "mouseout, blur",
+                    this.hideMenu,
+                    false
+                );
+
+                subMenuItems = subMenu.querySelectorAll("li a");
+                for (j = 0, nSubMenuItems = subMenuItems.length; j < nSubMenuItems; j += 1) {
+                    subMenuItems[j].removeAttribute("tabindex");
+                    ajl.event.remove(
+                        subMenuItems[j],
+                        "keydown",
+                        ajl.util.proxy(this, this.keydownEventHandler),
+                        false
+                    );
+                }
+            }
+        }
     },
 
     init: function () {
