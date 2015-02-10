@@ -95,7 +95,7 @@ ajl.Menu.prototype = {
         }
     },
 
-    destory: function () {
+    destroy: function () {
         var i,
             j,
             nItems,

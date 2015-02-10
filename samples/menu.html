@@ -147,7 +147,7 @@
 	color: #fff;
 }
 
-.mod-destory{
+.mod-destroy{
 	margin-bottom: 30px;
 }
 </style>
@@ -190,8 +190,8 @@
 </div><!-- /.page-header -->
 <p>メニューの第1階層はTabキーで、第2階層は上下キーで操作できます。（Macの場合は、事前に環境設定＞キーボード＞ショートカット内にあるフルキーボードアクセスの設定値を「すべてのコントロール」にすること。）</p>
 
-<div class="mod-destory">
-<button id="btn_destory">Destory</button> <button id="btn_reinit">Re Init</button>
+<div class="mod-destroy">
+<button id="btn_destroy">destroy</button> <button id="btn_reinit">Re Init</button>
 </div>
 
 <nav id="menu" role="navigation" class="nav-global">
@@ -234,10 +234,10 @@
 <script src="../src/ajl.menu.js"></script>
 <script>
 var objMenu = ajl.enable.menu(".js-menu");
-var btnDestory = document.getElementById("btn_destory");
+var btndestroy = document.getElementById("btn_destroy");
 var btnReInit = document.getElementById("btn_reinit");
-btnDestory.addEventListener("click", function () {
-    objMenu[0].destory();
+btndestroy.addEventListener("click", function () {
+    objMenu[0].destroy();
 }, false);
 btnReInit.addEventListener("click", function () {
     objMenu[0].init();
