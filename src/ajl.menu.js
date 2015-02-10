@@ -12,6 +12,7 @@ ajl.Menu = function (elem, options) {
     this.generateId = "AJL_MENU_" + Math.floor(Math.random() * 1000000);
     this.timerId = null;
     this.stack = [];
+    this.methodStack = [];
     this.defaults = {
         activeClassName: "active",
         closeWaitTime: 1000,
@@ -116,7 +117,7 @@ ajl.Menu.prototype = {
             ajl.event.remove(
                 menuItems[i],
                 "mouseover, focus",
-                this.showMenu,
+                this.methodStack.show,
                 false
             );
 
@@ -128,25 +129,25 @@ ajl.Menu.prototype = {
                 ajl.event.remove(
                     menuItems[i],
                     "mouseout, blur",
-                    this.hideMenu,
+                    this.methodStack.hide,
                     false
                 );
                 ajl.event.remove(
                     menuItems[i],
                     "keydown",
-                    this.keydownEventHandler,
+                    this.methodStack.keydown,
                     false
                 );
                 ajl.event.remove(
                     subMenu,
                     "mouseover, focus",
-                    this.clearTimer,
+                    this.methodStack.timer,
                     false
                 );
                 ajl.event.remove(
                     subMenu,
                     "mouseout, blur",
-                    this.hideMenu,
+                    this.methodStack.hide,
                     false
                 );
 
@@ -156,7 +157,7 @@ ajl.Menu.prototype = {
                     ajl.event.remove(
                         subMenuItems[j],
                         "keydown",
-                        ajl.util.proxy(this, this.keydownEventHandler),
+                        this.methodStack.keydown,
                         false
                     );
                 }
@@ -179,6 +180,11 @@ ajl.Menu.prototype = {
         this.elem.setAttribute("role", "menu");
         menuItems = this.options.collect(this.generateId);
 
+        this.methodStack.show = ajl.util.proxy(this, this.showMenu);
+        this.methodStack.hide = ajl.util.proxy(this, this.hideMenu);
+        this.methodStack.timer = ajl.util.proxy(this, this.clearTimer);
+        this.methodStack.keydown = ajl.util.proxy(this, this.keydownEventHandler);
+
         for (i = 0, nItems = menuItems.length; i < nItems; i += 1) {
             this.allMenuItems.push(menuItems[i]);
             menuItems[i].setAttribute("role", "menuitem");
@@ -189,7 +195,7 @@ ajl.Menu.prototype = {
             ajl.event.add(
                 menuItems[i],
                 "mouseover, focus",
-                ajl.util.proxy(this, this.showMenu),
+                this.methodStack.show,
                 false
             );
 
@@ -202,25 +208,25 @@ ajl.Menu.prototype = {
                 ajl.event.add(
                     menuItems[i],
                     "mouseout, blur",
-                    ajl.util.proxy(this, this.hideMenu),
+                    this.methodStack.hide,
                     false
                 );
                 ajl.event.add(
                     menuItems[i],
                     "keydown",
-                    ajl.util.proxy(this, this.keydownEventHandler),
+                    this.methodStack.keydown,
                     false
                 );
                 ajl.event.add(
                     subMenu,
                     "mouseover, focus",
-                    ajl.util.proxy(this, this.clearTimer),
+                    this.methodStack.timer,
                     false
                 );
                 ajl.event.add(
                     subMenu,
                     "mouseout, blur",
-                    ajl.util.proxy(this, this.hideMenu),
+                    this.methodStack.hide,
                     false
                 );
 
@@ -233,7 +239,7 @@ ajl.Menu.prototype = {
                     ajl.event.add(
                         subMenuItems[j],
                         "keydown",
-                        ajl.util.proxy(this, this.keydownEventHandler),
+                        this.methodStack.keydown,
                         false
                     );
                 }
