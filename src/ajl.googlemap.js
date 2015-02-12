@@ -4,9 +4,20 @@
 // ----------------------------------------------------------------------------
 // GoogleMap: Google Mapsの表示
 // ----------------------------------------------------------------------------
+// todo: コントロールUIの変更について要検討
+//       https://developers.google.com/maps/documentation/javascript/controls?hl=ja#DefaultControls
+// 
+//       スタイルの変更について
+//       変更しても見にくいだけではないか？
+//       https://developers.google.com/maps/documentation/javascript/styling?hl=ja
 ajl.GoogleMap = function (elem, options) {
     this.elem = elem;
+    this.map = null;
     this.mapImg = null;
+    this.markers = [];
+    this.state = {
+        openedInfoWindow: null
+    };
     this.defaults = {
         dynamicOnly: false,
         sensor: false,
@@ -21,7 +32,7 @@ ajl.GoogleMap = function (elem, options) {
 };
 
 ajl.GoogleMap.prototype = {
-    loadScript: function (cbName) {
+    _loadScript: function (cbName) {
         var script = document.createElement("script"),
             src;
 
@@ -57,6 +68,48 @@ ajl.GoogleMap.prototype = {
         return params;
     },
 
+    _ctrlInfoWindow: function (markerObj, obj) {
+        if (obj.state.openedInfoWindow) {
+            obj.state.openedInfoWindow.close();
+        }
+        markerObj.infoWindow.open(obj.map, markerObj);
+        obj.state.openedInfoWindow = markerObj.infoWindow;
+    },
+
+    _setMarkers: function () {
+        var self = this,
+            latLng,
+            nMarkers = this.options.markers.length,
+            i,
+            handler = function () {
+                self._ctrlInfoWindow(this, self);
+            };
+
+        for (i = 0; i < nMarkers; i += 1) {
+            latLng = new google.maps.LatLng(
+                this.options.markers[i].lat,
+                this.options.markers[i].lng
+            );
+            this.markers[i] = new google.maps.Marker({
+                position: latLng,
+                title: this.options.markers[i].title,
+                icon: this.options.markers[i].icon ? this.options.markers[i].icon : "",
+                map: this.map
+            });
+
+            if (this.options.markers[i].content) {
+                this.markers[i].infoWindow = new google.maps.InfoWindow({
+                    content: this.options.markers[i].content
+                });
+                google.maps.event.addListener(
+                    this.markers[i],
+                    "click",
+                    handler
+                );
+            }
+        }
+    },
+
     replaceMap: function () {
         var div = document.createElement("div"),
             params = this._getParams(),
@@ -77,16 +130,16 @@ ajl.GoogleMap.prototype = {
         };
 
         div.className = this.options.className;
-        map = new google.maps.Map(div, options);
+        div.style.height = this.mapImg.offsetHeight + "px";
+        this.mapImg.parentNode.replaceChild(div, this.mapImg);    // 先にappendしないと表示にバグ発生
+
+        this.map = new google.maps.Map(div, options);
         latLngStr = params.markers.split(",");
         latLng = new google.maps.LatLng(latLngStr[0], latLngStr[1]);
         marker = new google.maps.Marker({
             position: latLng,
-            map: map
+            map: this.map
         });
-
-        div.style.height = this.mapImg.offsetHeight + "px";
-        this.mapImg.parentNode.replaceChild(div, this.mapImg);
     },
 
     dispMap: function (self) {
@@ -96,61 +149,50 @@ ajl.GoogleMap.prototype = {
             options = {};
 
         div.className = self.options.className;
-
-        // var styledMapId = "style" + Math.floor(Math.random() * 1000);
-        // var styledMap = new google.maps.StyledMapType(
-        //     this.options.mapOptions.mapStyles,
-        //     { name: styledMapId }
-        // );
-
         options.center = new google.maps.LatLng(
             self.options.mapOptions.lat,
             self.options.mapOptions.lng
         );
         options.zoom = self.options.mapOptions.zoom;
         options.mapTypeId = self.options.mapType;
-        // options.mapTypeControlOptions = {};
-        // options.mapTypeControlOptions.mapTypeIds = self.options.mapOptions.mapType;
-
-        map = new google.maps.Map(div, options);
-        // latLngStr = params.markers.split(",");
-        // latLng = new google.maps.LatLng(latLngStr[0], latLngStr[1]);
-        marker = new google.maps.Marker({
-            position: options.center,
-            map: map
-        });
-
-        // map.mapTypes.set("map_style", styledMap);
-        // map.setMapTypeId("map_style");
+        this.map = new google.maps.Map(div, options);
+        this._setMarkers();
 
         // div.style.height = self.mapImg.offsetHeight + "px";
         self.elem.appendChild(div);
      },
 
     init: function () {
-        var self = this,
-            id;
+        var id;
 
         if (this.options.dynamicOnly) {
-            if (ajl.cb.gmap) {
-                ajl.event.add(window, "gmaploaded", ajl.util.proxy(this, function () {
-                    this.dispMap(this);
-                }));
-            } else {
+            ajl.event.add(window, "gmaploaded", ajl.util.proxy(this, function () {
+                this.dispMap(this);
+            }));
+
+            if (!ajl.cb.gmap) {
                 id = "AJL_GMAP_" + Math.floor(Math.random() * 1000000);
                 ajl.cb.gmap = {};
                 ajl.cb.gmap[id] = ajl.util.proxy(this, function () {
                     ajl.event.trigger(window, "gmaploaded");
-                    return this.dispMap(this);
                 });
-                this.loadScript("ajl.cb.gmap." + id);
+                this._loadScript("ajl.cb.gmap." + id);
             }
+        } else {
+            this.mapImg = this.options.collect(this.elem);
+            ajl.event.add(window, "gmaploaded", ajl.util.proxy(this, function () {
+                ajl.event.add(this.mapImg, "click", ajl.util.proxy(this, this.replaceMap));
+            }));
 
-            return;
+            if (!ajl.cb.gmap) {
+                id = "AJL_GMAP_" + Math.floor(Math.random() * 1000000);
+                ajl.cb.gmap = {};
+                ajl.cb.gmap[id] = ajl.util.proxy(this, function () {
+                    ajl.event.trigger(window, "gmaploaded");
+                });
+                this._loadScript("ajl.cb.gmap." + id);
+            }
         }
-
-        this.mapImg = this.options.collect(this.elem);
-        ajl.event.add(this.mapImg, "click", ajl.util.proxy(this, this.replaceMap));
     }
 };
 

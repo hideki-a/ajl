@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="css/basic.css">
 <style>
 .mod-gmaps-container{
+	margin-bottom: 20px;
 	width: 500px;
 }
 
@@ -67,15 +68,21 @@
 
 <h2>静的マップ</h2>
 <p>クリック（またはタップ）すると、地図を動かすことができるようになります。</p>
+<h3>地点A</h3>
 <div class="mod-gmaps-container js-googlemap-static">
+<img class="gmaps" alt="広島駅" src="http://maps.google.com/maps/api/staticmap?center=34.394122,132.463642&amp;zoom=14&amp;size=500x500&amp;maptype=roadmap&amp;markers=34.398205,132.475824&amp;sensor=false">
+</div><!-- /.mod-gmaps-container -->
+<h3>地点B</h3>
+<div class="mod-gmaps-container js-googlemap-static-02">
 <img class="gmaps" alt="株式会社ミツエーリンクス" src="http://maps.google.com/maps/api/staticmap?center=35.695088,139.690422&amp;zoom=17&amp;size=500x500&amp;maptype=roadmap&amp;markers=35.695988,139.690422&amp;sensor=false">
 </div><!-- /.mod-gmaps-container -->
 
 <h2>動的マップ</h2>
-<h3>本社</h3>
+<p>代替コンテンツについて検討すること。</p>
+<h3>単一ポイント</h3>
 <div class="mod-gmaps-container js-googlemap-dynamic-01">
 </div><!-- /.mod-gmaps-container -->
-<h3>仙台オフィス</h3>
+<h3>複数ポイント・独自アイコン</h3>
 <div class="mod-gmaps-container js-googlemap-dynamic-02">
 </div><!-- /.mod-gmaps-container -->
 </div><!-- /.container -->
@@ -89,6 +96,7 @@
 <script src="../src/ajl.googlemap.js"></script>
 <script>
 ajl.enable.googleMap(".js-googlemap-static");
+ajl.enable.googleMap(".js-googlemap-static-02");
 ajl.enable.googleMap(".js-googlemap-dynamic-01", {
     dynamicOnly: true,
     mapOptions: {
@@ -96,19 +104,61 @@ ajl.enable.googleMap(".js-googlemap-dynamic-01", {
         lng: 139.690422,
         zoom: 15,
         mapType: "roadmap",
-        // mapType: ["roadmap", "map_style"],
-        // mapStyles: [
-        // ]
-    }
+    },
+    markers: [
+        {
+            title: "株式会社ミツエーリンクス",
+            lat: 35.695988,
+            lng: 139.690422,
+            content: "<div class='mod-gmaps-marker-01'><a href='http://www.mitsue.co.jp/'>株式会社ミツエーリンクス</a></div>"
+        },
+    ]
 });
 ajl.enable.googleMap(".js-googlemap-dynamic-02", {
     dynamicOnly: true,
     mapOptions: {
-        lat: 38.256466,
-        lng: 140.876208,
-        zoom: 15,
+        lat: 35.690202,
+        lng: 139.716459,
+        zoom: 12,
         mapType: "roadmap",
-    }
+    },
+    markers: [
+        {
+            title: "株式会社ミツエーリンクス",
+            lat: 35.695988,
+            lng: 139.690422,
+            content: "<div class='mod-gmaps-marker-01'><a href='http://www.mitsue.co.jp/'>株式会社ミツエーリンクス</a></div>",
+            icon: "images/icon_mapmarker.png"
+        },
+        {
+            title: "株式会社アイ・エム・ジェイ",
+            lat: 35.689652,
+            lng: 139.714953,
+            content: "<div class='mod-gmaps-marker-01'><a href='http://www.imjp.co.jp/'>株式会社アイ・エム・ジェイ</a></div>",
+            icon: "images/icon_mapmarker.png"
+        },
+        {
+            title: "株式会社ビジネス・アーキテクツ",
+            lat: 35.672668,
+            lng: 139.732017,
+            content: "<div class='mod-gmaps-marker-01'><a href='http://www.b-architects.com/'>株式会社ビジネス・アーキテクツ</a></div>",
+            icon: "images/icon_mapmarker.png"
+        },
+        {
+            title: "株式会社メンバーズ",
+            lat: 35.656433,
+            lng: 139.782161,
+            content: "<div class='mod-gmaps-marker-01'><a href='http://www.members.co.jp/'>株式会社メンバーズ</a></div>",
+            icon: "images/icon_mapmarker.png"
+        },
+        {
+            title: "株式会社キノトロープ",
+            lat: 35.668646,
+            lng: 139.677419,
+            content: "<div class='mod-gmaps-marker-01'><a href='http://www.kinotrope.co.jp/'>株式会社キノトロープ</a></div>",
+            icon: "images/icon_mapmarker.png"
+        },
+    ]
 });
 </script>
 
