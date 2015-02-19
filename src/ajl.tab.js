@@ -6,6 +6,7 @@
 // ----------------------------------------------------------------------------
 ajl.Tab = function (elem, options) {
     this.elem = elem;
+    this.tabPanelsRoot = null;
     this.tabPanels = null;
     this.tabListRoot = null;
     this.tabListItem = null;
@@ -114,7 +115,8 @@ ajl.Tab.prototype = {
         this.tabListRoot = tabListRoot[0];
         this.tabListItem = this.tabListRoot.getElementsByTagName("li");
         this.tabList = this.tabListRoot.getElementsByTagName("a");
-        this.tabPanels = this.elem.querySelector(this.options.tabPanelsRootClassName).children;
+        this.tabPanelsRoot = this.elem.querySelector(this.options.tabPanelsRootClassName);
+        this.tabPanels = this.tabPanelsRoot.children;
 
         nTabList = this.tabList.length;
         this.nTabPanels = this.tabPanels.length;
@@ -136,6 +138,9 @@ ajl.Tab.prototype = {
 
         // ul要素にrole="tablist"を付与
         this.tabListRoot.setAttribute("role", "tablist");
+
+        // タブを包含する要素にrole="presentation"を付与
+        this.tabPanelsRoot.setAttribute("role", "presentation");
 
         // li要素にrole="presentation"を付与
         for (i = 0; i < this.nTabPanels; i += 1) {
