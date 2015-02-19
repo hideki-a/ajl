@@ -40,6 +40,7 @@ ajl.Tab.prototype = {
         this.tabPanels[tabNumber].setAttribute("tabindex", -1);
         this.tabPanels[tabNumber].setAttribute("aria-hidden", "true");
         ajl.util.removeClass(this.tabPanels[tabNumber], "active");
+        this.tabList[tabNumber].setAttribute("tabindex", -1);
         this.tabList[tabNumber].setAttribute("aria-selected", "false");
         ajl.util.removeClass(this.tabListItem[tabNumber], "active");
     },
@@ -60,6 +61,7 @@ ajl.Tab.prototype = {
         this.tabPanels[tabNumber].setAttribute("tabindex", 0);
         this.tabPanels[tabNumber].setAttribute("aria-hidden", "false");
         ajl.util.addClass(this.tabPanels[tabNumber], "active");
+        this.tabList[tabNumber].setAttribute("tabindex", 0);
         this.tabList[tabNumber].setAttribute("aria-selected", "true");
         ajl.util.addClass(this.tabListItem[tabNumber], "active");
         this.activeTabNumber = tabNumber;
@@ -74,8 +76,6 @@ ajl.Tab.prototype = {
 
     keydownHandler: function (e) {
         var tabNumber = null;
-
-        e.preventDefault();
 
         switch (e.keyCode) {
             case 37:
@@ -150,6 +150,7 @@ ajl.Tab.prototype = {
             tab.setAttribute("aria-hidden", "true");
 
             this.tabList[i].setAttribute("role", "tab");
+            this.tabList[i].setAttribute("tabindex", -1);
             this.tabList[i].setAttribute("aria-controls", tab.id);
             this.tabList[i].setAttribute("aria-selected", "false");
 
