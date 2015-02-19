@@ -102,13 +102,24 @@ ajl.util = {
     },
 
     removeClass: function (elem, className) {
+        var before = elem.className,
+            after;
+
         if (elem.classList) {
             elem.classList.remove(className);
         } else {
-            el.className.replace(
+            after = before.replace(
                 new RegExp("(^|\\b)" + className.split(" ").join("|") + "(\\b|$)", "gi"),
                 " "
             );
+
+            if (before !== after) {
+                if (/\s+/.test(after)) {
+                    elem.removeAttribute("class");
+                } else {
+                    elem.className = after;
+                }
+            }
         }
     },
 
