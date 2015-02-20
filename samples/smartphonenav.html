@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<title>ajl Smartphone Nav</title>
+<link rel="stylesheet" href="css/basic.css">
+<style>
+body {
+	overflow: hidden;
+}
+
+.sample h3,
+.sample ul,
+.sample li,
+.sample button{
+	margin: 0;
+	padding: 0;
+	font-size: 1em;
+}
+
+.sample .btn-toggle-menu-01,
+.sample .btn-toggle-menu-02 {
+	margin-bottom: 10px;
+	padding: 5px;
+}
+
+.nav-menu-01{
+	margin-bottom: 10px;
+}
+
+.nav-menu-01 .nav-menu-01-content,
+.nav-menu-02 .nav-menu-02-content {
+	border: 1px solid #CBB38B;
+}
+
+.nav-menu-01 .nav-menu-01-hdg,
+.nav-menu-02 .nav-menu-02-hdg {
+	padding: 10px;
+	background-color: #CBB38B;
+	color: #fff;
+}
+
+.nav-menu-01 ul, 
+.nav-menu-02 ul, {
+	margin: 0 5px;
+}
+
+.nav-menu-01 li, 
+.nav-menu-02 li {
+	border-bottom: 1px dotted #000;
+}
+
+.nav-menu-01 li:last-child,
+.nav-menu-02 li:last-child {
+	border-bottom: none;
+}
+
+.nav-menu-01 li a,
+.nav-menu-02 li a {
+	display: block;
+	padding: 10px 5px;
+}
+
+.nav-menu-01.js-menu-enable {
+	overflow: hidden;
+	max-height: 0;
+	-webkit-transition: max-height 0.66s;
+	transition: max-height 0.66s;
+}
+
+.nav-menu-01.js-menu-enable.is-hide .nav-menu-01-content {
+	display: none;
+}
+
+.nav-menu-01.is-show {
+	max-height: 500px;
+}
+
+.sample-02-container {
+	position: relative;
+	z-index: 2;
+	background-color: #fff;
+	box-shadow: -3px 0px 3px #eee;
+}
+
+.btn-toggle-menu-02 {
+	border-width: 0;
+	width: 100px;
+	background-color: #67cbc1;
+	color: #fff;
+}
+
+.btn-toggle-menu-02 img {
+	position: relative;
+	top: -1px;
+	margin-right: 3px;
+}
+
+.nav-menu-02 {
+	position: absolute;
+	top: 71px;
+	left: 0;
+	z-index: 1;
+	width: 100%;
+}
+
+.nav-menu-02.is-hide {
+	display: none;
+}
+
+.sample-02-container.js-menu-enable {
+	left: 0;
+	-webkit-transition: left 0.66s;
+	transition: left 0.66s;
+}
+
+.sample-02-container.is-show {
+	left: 300px;
+}
+</style>
+</head>
+
+<body>
+<div class="sample-02-container">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" href="./">ajl</a>
+</div>
+<div id="navbar" class="collapse navbar-collapse">
+<ul class="nav navbar-nav">
+<li><a href="./">Home</a></li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Plugins <span class="caret"></span></a>
+<ul class="dropdown-menu" role="menu">
+<li><a href="height_equalizer.html">要素の高さ揃え</a></li>
+<li><a href="tab.html">タブ</a></li>
+<li><a href="menu.html">メニュー</a></li>
+<li><a href="current_nav.html">ナビゲーションリストの現在地をアクティブにする</a></li>
+<li><a href="smooth_scroll.html">ページ内リンクをスムーズにスクロールする</a></li>
+<li><a href="social_buttons.html">ソーシャルボタンのロード</a></li>
+<li><a href="googlemap.html">Google Mapの表示</a></li>
+</ul>
+</li>
+</ul>
+</div><!--/.nav-collapse -->
+</div>
+</nav>
+
+<div class="container">
+<div class="page-header">
+<h1>ajl Smartphone Nav</h1>
+</div><!-- /.page-header -->
+
+<p>アニメーションはCSS Transitionで設定する。JavaScriptは開閉時のclass属性値制御・WAI-ARIAステート管理などを担う。</p>
+<div class="sample">
+<h2>サンプル1 - 上下開閉</h2>
+<button class="btn-toggle-menu-01 js-toggle-menu-01">メニューを開閉</button>
+
+<nav id="menu" class="nav-menu-01 js-menu">
+<div class="nav-menu-01-content">
+<h3 class="nav-menu-01-hdg">LineUp</h3>
+<ul>
+<li><a href="#">EOS 1Dx</a></li>
+<li><a href="#">EOS 5D Mark Ⅲ</a></li>
+<li><a href="#">EOS 7D Mark Ⅱ</a></li>
+<li><a href="#">EOS 6D</a></li>
+<li><a href="#">EOS 70D</a></li>
+<li><a href="#">EOS Kiss 8</a></li>
+</ul>
+</div><!-- /.nav-menu-content -->
+</nav>
+</div><!-- /.sample -->
+
+<div class="sample">
+<h2>サンプル2 - 左右開閉</h2>
+<button class="btn-toggle-menu-02 js-toggle-menu-02"><img src="images/icon_menu_01.svg" width="20" height="20" alt="" class="icon">メニュー</button>
+</div><!-- /.sample -->
+</div><!-- /.container -->
+
+<footer role="contentinfo" class="docs-footer">
+<p>Code licensed under <a href="http://opensource.org/licenses/MIT" target="_blank">MIT</a>, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+</footer>
+</div><!-- /.sample-02-container -->
+
+<nav id="menu_02" class="sample nav-menu-02 js-menu-02">
+<div class="nav-menu-02-content">
+<h3 class="nav-menu-02-hdg">LineUp</h3>
+<ul>
+<li><a href="#">EOS 1Dx</a></li>
+<li><a href="#">EOS 5D Mark Ⅲ</a></li>
+<li><a href="#">EOS 7D Mark Ⅱ</a></li>
+<li><a href="#">EOS 6D</a></li>
+<li><a href="#">EOS 70D</a></li>
+<li><a href="#">EOS Kiss 8</a></li>
+</ul>
+</div><!-- /.nav-menu-content -->
+</nav>
+
+<!-- load ajl -->
+<script src="../src/ajl.core.js"></script>
+<script src="../src/ajl.smartphonenav.js"></script>
+<script>
+ajl.enable.smartphoneNav(".js-toggle-menu-01");
+ajl.enable.smartphoneNav(".js-toggle-menu-02", {
+    controlTarget: ".js-menu-02",
+    animationTarget: ".sample-02-container",
+    direction: "horizontal",
+    btnCloseLabel: "<img src='images/icon_close_01.svg' width='18' height='18' alt='' class='icon'>閉じる"
+});
+</script>
+
+<!-- for Bootstrap Theme's scripts -->
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>
