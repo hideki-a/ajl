@@ -81,6 +81,8 @@ ajl.Tab.prototype = {
         switch (e.keyCode) {
             case 37:
             case 38:
+                e.preventDefault();
+
                 if (this.activeTabNumber - 1 > -1) {
                     tabNumber = this.activeTabNumber - 1;
                 }
@@ -89,7 +91,9 @@ ajl.Tab.prototype = {
 
             case 39:
             case 40:
-                if (this.activeTabNumber + 1 <= this.nTabPanels) {
+                e.preventDefault();
+
+                if (this.activeTabNumber + 1 < this.nTabPanels) {
                     tabNumber = this.activeTabNumber + 1;
                 }
 
