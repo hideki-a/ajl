@@ -44,20 +44,64 @@
 <div class="container">
 <div class="jumbotron">
 <h1>ajl Samples</h1>
-<p>MJLやbajlからひらめきや知見を得て開発したライブラリ。IE9+対応・jQuery非依存。coreと必要なプラグインをconcat・minifyして使うと良いです。</p>
+<p>MJLやbajlからひらめきや知見を得て開発したライブラリ。IE9+対応・jQuery非依存。coreと必要なプラグインをgulpでビルドして使うと良いです。</p>
 </div>
 
 <h2>Plugins</h2>
-<ul>
-<li><a href="height_equalizer.html">要素の高さ揃え</a></li>
-<li><a href="tab.html">タブ</a></li>
-<li><a href="menu.html">メニュー</a></li>
-<li><a href="current_nav.html">ナビゲーションリストの現在地をアクティブにする</a></li>
-<li><a href="smooth_scroll.html">ページ内リンクをスムーズにスクロールする</a></li>
-<li><a href="social_buttons.html">ソーシャルボタンのロード</a></li>
-<li><a href="googlemap.html">Google Mapの表示</a></li>
-<li><a href="smartphonenav.html">スマートフォン向けナビゲーション</a></li>
-</ul>
+<table class="table table-bordered table-plugins">
+<col class="funcname">
+<col class="codename">
+<col class="note">
+<thead>
+<tr>
+<th scope="col">機能</th>
+<th scope="col">プラグインコード名</th>
+<th scope="col">備考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row"><a href="height_equalizer.html">要素の高さ揃え</a></th>
+<td>heightEqualizer</td>
+<td></td>
+</tr>
+<tr>
+<th scope="row"><a href="tab.html">タブ</a></th>
+<td>tab</td>
+<td></td>
+</tr>
+<tr>
+<th scope="row"><a href="menu.html">メニュー</a></th>
+<td>menu</td>
+<td></td>
+</tr>
+<tr>
+<th scope="row"><a href="current_nav.html">ナビゲーションリストの現在地をアクティブにする</a></th>
+<td>currentNav</td>
+<td></td>
+</tr>
+<tr>
+<th scope="row"><a href="smooth_scroll.html">ページ内リンクをスムーズにスクロールする</a></th>
+<td>smoothScroll</td>
+<td></td>
+</tr>
+<tr>
+<th scope="row"><a href="social_buttons.html">ソーシャルボタンのロード</a></th>
+<td>socialButtons</td>
+<td></td>
+</tr>
+<tr>
+<th scope="row"><a href="googlemap.html">Google Mapの表示</a></th>
+<td>googleMap</td>
+<td></td>
+</tr>
+<tr>
+<th scope="row"><a href="smartphonenav.html">スマートフォン向けナビゲーション</a></th>
+<td>smartphoneNav</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 
 <h2>A Brief Look</h2>
 <p>以下のコードでプラグインが実行されます。</p>
@@ -65,6 +109,10 @@
 ajl.enable.pluginName(&quot;.class-name&quot;, { option: optionValue });
 &lt;/script&gt;
 </code></pre>
+
+<h2>Building for production</h2>
+<p>gulpを利用して、コアと必要なプラグインを結合・圧縮できます。<code>--plugins</code>オプションには、プラグインコード名をカンマ区切りで列挙します。</p>
+<pre><code><samp>$ </samp><kbd>gulp build --plugins heightEqualizer,smartphoneNav</kbd></code></pre>
 
 <h2>Project Policy</h2>
 <ul>
@@ -77,9 +125,6 @@ ajl.enable.pluginName(&quot;.class-name&quot;, { option: optionValue });
 <footer role="contentinfo" class="docs-footer">
 <p>Code licensed under <a href="http://opensource.org/licenses/MIT" target="_blank">MIT</a>, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
 </footer>
-
-<script src="../src/ajl.core.js"></script>
-<script src="../src/ajl.currentnav.js"></script>
 
 <!-- for Bootstrap Theme's scripts -->
 <script src="js/jquery-1.11.2.min.js"></script>

@@ -1,3 +1,11 @@
+/*!
+ * ajl
+ *
+ * Copyright 2015 Hideki Abe
+ * Released under the MIT license
+ * http://opensource.org/licenses/MIT
+ *
+ */
 (function (window, document) {
 "use strict";
 

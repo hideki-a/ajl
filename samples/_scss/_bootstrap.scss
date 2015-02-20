@@ -12,7 +12,7 @@
 @import "bootstrap/type";
 @import "bootstrap/code";
 @import "bootstrap/grid";
-// @import "bootstrap/tables";
+@import "bootstrap/tables";
 @import "bootstrap/forms";
 // @import "bootstrap/buttons";
 
@@ -64,4 +64,13 @@ body.home{
 	border-top: 1px solid #e5e5e5;
 	color: #767676;
 	text-align: center;
+}
+
+.table-plugins{
+	.funcname{
+		width: 40%;
+	}
+	.note{
+		width: 40%;
+	}
 }
