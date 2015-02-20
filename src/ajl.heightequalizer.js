@@ -62,7 +62,7 @@ ajl.HeightEqualizer.prototype = {
             if (height.length > 0) {
                 this.target[i].style.height = height[i] + "px";
             } else {
-                this.target[i].style.height = "";
+                this.target[i].style.height = "auto";
             }
 
             i += 1;
