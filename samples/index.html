@@ -120,6 +120,43 @@ ajl.enable.pluginName(&quot;.class-name&quot;, { option: optionValue });
 <li>頻繁に利用するふるまいを容易に再現できるようにし、制作・検証の効率化を図る。</li>
 <li>WAI-ARIAを採用し、よりアクセシブルなUIを提供可能にする。</li>
 </ul>
+
+<h2>Plugin Template</h2>
+<p>プラグインの実行コードを統一するため、下記のテンプレートに沿って作成します。initメソッドは必須です。</p>
+<pre><code>(function (window, document, ajl) {
+&quot;use strict&quot;;
+
+// ----------------------------------------------------------------------------
+// PluginName: プラグインの要旨
+// ----------------------------------------------------------------------------
+ajl.PluginName = function (elem, options) {
+    this.elem = elem;
+    this.defaults = {
+        collect: function (parent) {
+            return parent.children;
+        }
+    };
+
+    this.options = ajl.util.deepExtend({}, this.defaults, options);
+};
+
+ajl.PluginName.prototype = {
+    _privateMethod: function () {
+        // Do something
+    },
+
+    publicMethod: function () {
+        // Do something
+    },
+
+    init: function () {
+        // Do something
+   }
+};
+
+ajl.util.createRunner(&quot;PluginName&quot;);
+
+}(window, document, ajl));</code></pre>
 </div><!-- /.container -->
 
 <footer role="contentinfo" class="docs-footer">
