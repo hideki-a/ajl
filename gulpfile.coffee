@@ -37,12 +37,13 @@ knownOptions =
 options = minimist process.argv.slice(2), knownOptions;
 
 # Tasks
-gulp.task 'browser-sync', ->
+gulp.task 'serve', ->
     browserSync
         server:
             baseDir: BASEPATH
         port: PORT
-        browser: "google chrome"
+        browser: 'google chrome'
+        startPath: PATHS.STATIC.SRC
     return
 
 gulp.task 'styles', ->
@@ -97,6 +98,6 @@ gulp.task 'watch', ->
     return
 
 gulp.task 'default', [
-    'browser-sync'
+    'serve'
     'watch'
 ]
