@@ -13,7 +13,7 @@ PATHS =
 PORT = '3501'
 AUTOPREFIXER_BROWSERS = [
     'last 2 versions'
-    'IE >= 8'
+    'IE >= 9'
     'Firefox ESR'
     'Android >= 4.1'
 ]
