@@ -26,16 +26,21 @@ ajl.Menu = function (elem, options) {
 };
 
 ajl.Menu.prototype = {
-    clearTimer: function () {
-        window.clearTimeout(this.timerId);
+    clearTimer: function (isKeyboardEvent) {
+        if (this.timerId) {
+            window.clearTimeout(this.timerId);
+            this.timerId = null;
+        } else if (isKeyboardEvent) {
+            window.setTimeout(ajl.util.proxy(this, this.clearTimer, true), this.options.closeWaitTime / 4);
+        }
     },
 
     hideMenu: function () {
-        if (this.stack.length > 0) {
+        if (this.stack.length > 0 && !this.timerId) {
             this.timerId = setTimeout(ajl.util.proxy(this, function () {
                 var openMenu = this.stack.shift();
 
-                openMenu.classList.remove(this.options.activeClassName);
+                ajl.util.removeClass(openMenu, this.options.activeClassName);
                 openMenu.setAttribute("aria-expanded", "false");
                 openMenu.setAttribute("aria-hidden", "true");
             }), this.options.closeWaitTime);
@@ -49,13 +54,13 @@ ajl.Menu.prototype = {
         if (this.stack.length > 0) {
             this.clearTimer();
             openMenu = this.stack.shift();
-            openMenu.classList.remove(this.options.activeClassName);
+            ajl.util.removeClass(openMenu, this.options.activeClassName);
             openMenu.setAttribute("aria-expanded", "false");
             openMenu.setAttribute("aria-hidden", "true");
         }
 
         if (targetMenu) {
-            targetMenu.classList.add(this.options.activeClassName);
+            ajl.util.addClass(targetMenu, this.options.activeClassName);
             targetMenu.setAttribute("aria-expanded", "true");
             targetMenu.setAttribute("aria-hidden", "false");
             this.stack.push(targetMenu);
@@ -80,7 +85,7 @@ ajl.Menu.prototype = {
             if (e.target.nextElementSibling && e.target.nextElementSibling.tagName.toLowerCase() === "ul") {
                 nextFocusId = menuId + 1;
                 this.allMenuItems[nextFocusId].focus();
-                this.clearTimer();
+                this.clearTimer(true);
             } else if (e.target.parentNode.nextElementSibling) {
                 nextFocusId = menuId + 1;
                 this.allMenuItems[nextFocusId].focus();
@@ -104,12 +109,20 @@ ajl.Menu.prototype = {
             subMenu,
             subMenuItems,
             nSubMenuItems,
-            menuId = 0;
+            menuId = 0,
+            body = document.getElementsByTagName("body")[0];
 
         ajl.util.removeClass(this.elem, "ajl-menu-enabled");
         menuItems = this.options.collect(this.generateId);
         this.elem.id = "";
         this.stack = [];
+
+        ajl.event.remove(
+            body,
+            "mousedown",
+            this.methodStack.hide,
+            false
+        );
 
         for (i = 0, nItems = menuItems.length; i < nItems; i += 1) {
             subMenu = menuItems[i].nextElementSibling;
@@ -173,7 +186,8 @@ ajl.Menu.prototype = {
             subMenu,
             subMenuItems,
             nSubMenuItems,
-            menuId = 0;
+            menuId = 0,
+            body = document.getElementsByTagName("body")[0];
 
         ajl.util.addClass(this.elem, "ajl-menu-enabled");
         this.elem.id = this.generateId;
@@ -184,6 +198,13 @@ ajl.Menu.prototype = {
         this.methodStack.hide = ajl.util.proxy(this, this.hideMenu);
         this.methodStack.timer = ajl.util.proxy(this, this.clearTimer);
         this.methodStack.keydown = ajl.util.proxy(this, this.keydownEventHandler);
+
+        ajl.event.add(
+            body,
+            "mousedown",
+            this.methodStack.hide,
+            false
+        );
 
         for (i = 0, nItems = menuItems.length; i < nItems; i += 1) {
             this.allMenuItems.push(menuItems[i]);
