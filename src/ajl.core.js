@@ -131,6 +131,14 @@ ajl.util = {
         }
     },
 
+    hasClass: function (elem, className) {
+        if (elem.classList) {
+            return elem.classList.contains(className);
+        } else {
+            return new RegExp('(^| )' + className + '( |$)', 'gi').test(elem.className);
+        }
+    },
+
     getRunner: function (NewObj) {
         return function (className, options) {
             var elems = document.querySelectorAll(className),
