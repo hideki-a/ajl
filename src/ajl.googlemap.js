@@ -23,6 +23,7 @@ ajl.GoogleMap = function (elem, options) {
         sensor: false,
         className: "dynamicmap",
         mapOptions: null,
+        language: "ja",
         collect: function (elem) {
             return elem.getElementsByTagName("img")[0];
         }
@@ -47,6 +48,8 @@ ajl.GoogleMap.prototype = {
         if (cbName) {
             src += "&callback=" + cbName;
         }
+
+        src += "&language=" + this.options.language;
 
         script.src = src;
         document.body.appendChild(script);
