@@ -41,6 +41,47 @@ ul{
 .list-u-01:after{
     clear: both;
 }
+
+.list-u-02{
+    max-width: 940px;
+}
+
+.list-u-02 li{
+    float: left;
+    margin: 0  2% 20px 0;
+    padding: 5px;
+    border: 1px solid #999;
+    width: 32%;
+    box-sizing: border-box;
+}
+
+@media screen and (min-width: 768px) {
+    .list-u-02 li:nth-child(3n){
+        margin-right: 0;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .list-u-02{
+        margin: 0 10px;
+    }
+
+    .list-u-02 li{
+        margin-right: 4%;
+        width: 48%;
+    }
+
+    .list-u-02 li:nth-child(2n){
+        margin-right: 0;
+    }
+}
+
+@media screen and (max-width: 479px) {
+    .list-u-02 li{
+        margin-right: 0;
+        width: 100%;
+    }
+}
 </style>
 <script>
 // window.addEventListener("load", function () {
@@ -111,6 +152,18 @@ ul{
 <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, temporibus.</li>
 <li>Lorem ipsum dolor sit amet, consectetur.</li>
 </ul>
+
+<h2>Support Multi Screen Size</h2>
+<ul class="list-u-02 js-demo-03">
+<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, temporibus, cupiditate, est minus enim maiores pariatur magnam ratione deleniti itaque placeat at error consectetur. Suscipit.</li>
+<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </li>
+<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, temporibus, cupiditate, est minus enim maiores pariatur magnam ratione deleniti </li>
+<li>Lorem ipsum dolor sit amet</li>
+<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, </li>
+<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, temporibus, cupiditate, est minus enim maiores pariatur magnam ratione.</li>
+<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, temporibus.</li>
+<li>Lorem ipsum dolor sit amet, consectetur.</li>
+</ul>
 </div><!-- /.container -->
 
 <footer role="contentinfo" class="docs-footer">
@@ -123,6 +176,22 @@ ul{
 <script>
 ajl.enable.heightEqualizer(".js-demo-01");
 ajl.enable.heightEqualizer(".js-demo-02", { groupBy: 3 });
+ajl.enable.heightEqualizer(".js-demo-03", {
+    groupBy: [
+        {
+            maxWidth: 479,
+            groupBy: 0
+        },
+        {
+            maxWidth: 767,
+            groupBy: 2
+        },
+        {
+            maxWidth: 99999,
+            groupBy: 3
+        },
+    ]
+});
 </script>
 
 <!-- for Bootstrap Theme's scripts -->

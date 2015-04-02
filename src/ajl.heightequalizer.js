@@ -16,6 +16,7 @@ ajl.HeightEqualizer = function (elem, options) {
         groupBy: null,
         checkFontResize: true
     };
+    this.breakPoints = null;
 
     this.options = ajl.util.deepExtend({}, this.defaults, options);
 };
@@ -29,9 +30,8 @@ ajl.HeightEqualizer.prototype = {
         }
     },
 
-    _getArrangeHeight: function (height, nElem) {
-        var groupBy = this.options.groupBy,
-            max,
+    _getArrangeHeight: function (height, nElem, groupBy) {
+        var max,
             i = 0;
 
         if (groupBy && 0 < groupBy && groupBy < nElem) {
@@ -72,7 +72,9 @@ ajl.HeightEqualizer.prototype = {
     doEqualize: function () {
         var height = [],
             nElem = this.target.length,
-            i = 0;
+            i = 0,
+            matchFlag = false,
+            groupBy;
 
         // 設定値をクリア
         this._setHeight([], nElem);
@@ -83,8 +85,31 @@ ajl.HeightEqualizer.prototype = {
             i += 1;
         }
 
+        // 高さ揃えのグループ単位を取得
+        if (this.breakPoints) {
+            this.breakPoints.forEach(ajl.util.proxy(this, function (breakPoint) {
+                if (!matchFlag && window.innerWidth < breakPoint) {
+                    this.options.groupBy.filter(function (item) {
+                        if (item.maxWidth === breakPoint) {
+                            groupBy = item.groupBy;
+                        }
+                    });
+
+                    matchFlag = true;
+                    return groupBy;
+                }
+            }));
+        } else {
+            groupBy = this.options.groupBy;
+        }
+
         // 揃える高さを算出
-        height = this._getArrangeHeight(height, nElem);
+        if (groupBy === 0) {
+            // 高さ揃えをキャンセル
+            height = [];
+        } else {
+            height = this._getArrangeHeight(height, nElem, groupBy);
+        }
 
         // 要素に高さを設定
         this._setHeight(height, nElem);
@@ -99,11 +124,31 @@ ajl.HeightEqualizer.prototype = {
         }
     },
 
+    defineGroupByVal: function () {
+        var groupBySetting = this.options.groupBy,
+            breakPoints = [];
+
+        groupBySetting.forEach(function (setting) {
+            breakPoints.push(setting.maxWidth);
+        });
+
+        breakPoints.sort(
+            function compareNumbers(a, b) {
+                return a - b;
+            }
+        );
+        this.breakPoints = breakPoints;
+    },
+
     init: function () {
         this.target = this.options.collect.call(this, this.parent);
         ajl.event.add(window, "load", ajl.util.proxy(this, this.doEqualize), false);
         ajl.event.add(window, "resize", ajl.util.proxy(this, this.doEqualize), false);
         ajl.event.add(window, "fontresize", ajl.util.proxy(this, this.doEqualize));
+
+        if (this.options.groupBy && typeof(this.options.groupBy) === "object") {
+            this.defineGroupByVal();
+        }
 
         if (this.options.checkFontResize) {
             // テキストサイズのみの変更を監視
