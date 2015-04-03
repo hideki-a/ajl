@@ -96,7 +96,6 @@ ajl.HeightEqualizer.prototype = {
                     });
 
                     matchFlag = true;
-                    return groupBy;
                 }
             }));
         } else {
