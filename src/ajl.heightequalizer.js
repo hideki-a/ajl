@@ -141,13 +141,14 @@ ajl.HeightEqualizer.prototype = {
 
     init: function () {
         this.target = this.options.collect.call(this, this.parent);
-        ajl.event.add(window, "load", ajl.util.proxy(this, this.doEqualize), false);
-        ajl.event.add(window, "resize", ajl.util.proxy(this, this.doEqualize), false);
-        ajl.event.add(window, "fontresize", ajl.util.proxy(this, this.doEqualize));
 
         if (this.options.groupBy && typeof(this.options.groupBy) === "object") {
             this.defineGroupByVal();
         }
+
+        ajl.event.add(window, "load", ajl.util.proxy(this, this.doEqualize), false);
+        ajl.event.add(window, "resize", ajl.util.proxy(this, this.doEqualize), false);
+        ajl.event.add(window, "fontresize", ajl.util.proxy(this, this.doEqualize));
 
         if (this.options.checkFontResize) {
             // テキストサイズのみの変更を監視
