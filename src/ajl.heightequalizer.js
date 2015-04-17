@@ -60,7 +60,7 @@ ajl.HeightEqualizer.prototype = {
 
         while (i < nElem) {
             if (height.length > 0) {
-                this.target[i].style.height = height[i] + "px";
+                this.target[i].style.height = Math.ceil(height[i]) + "px";
             } else {
                 this.target[i].style.height = "auto";
             }
