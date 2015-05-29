@@ -82,6 +82,8 @@ ajl.Menu.prototype = {
         }
 
         if (e.keyCode === nextKey) {
+            e.preventDefault();
+
             if (e.target.nextElementSibling && e.target.nextElementSibling.tagName.toLowerCase() === "ul") {
                 nextFocusId = menuId + 1;
                 this.allMenuItems[nextFocusId].focus();
@@ -91,6 +93,8 @@ ajl.Menu.prototype = {
                 this.allMenuItems[nextFocusId].focus();
             }
         } else if (e.keyCode === prevKey) {
+            e.preventDefault();
+
             if (e.target.parentNode.previousElementSibling) {
                 nextFocusId = menuId - 1;
                 this.allMenuItems[nextFocusId].focus();
