@@ -178,18 +178,18 @@ ajl.event = {
                 for (i = 0, nEvents = events.length; i < nEvents; i += 1) {
                     // String.prototype.trim(): IE9+
                     // See Also: https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/String/trim
-                    if (elem === window
-                        && events[i].trim() === "load"
-                        && document.readyState === "complete") {
+                    if (elem === window &&
+                        events[i].trim() === "load" &&
+                        document.readyState === "complete") {
                         listener();
                     } else {
                         elem.addEventListener(events[i].trim(), listener, useCapture);
                     }
                 }
             } else {
-                if (elem === window
-                    && type === "load"
-                    && document.readyState === "complete") {
+                if (elem === window &&
+                    type === "load" &&
+                    document.readyState === "complete") {
                     listener();
                 } else {
                     elem.addEventListener(type, listener, useCapture);
