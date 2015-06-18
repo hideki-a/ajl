@@ -7,6 +7,7 @@
 ajl.Menu = function (elem, options) {
     this.elem = elem;
     this.allMenuItems = [];
+    this.firstLevelMenuItems = [];
     this.nodeFirstIds = [];
     this.nodeLastIds = [];
     this.generateId = "AJL_MENU_" + Math.floor(Math.random() * 1000000);
@@ -70,18 +71,23 @@ ajl.Menu.prototype = {
     keydownEventHandler: function (e) {
         var elem,
             menuId = parseInt(e.target.getAttribute("data-item"), 10),
+            arrayIndex,
             nextFocusId,
-            nextKey,
-            prevKey;
+            nextRootKey,
+            prevRootKey,
+            nextChildKey,
+            prevChildKey;
 
         switch (this.options.direction) {
             case "down":
-                nextKey = ajl.def.keyCode.DOWN;
-                prevKey = ajl.def.keyCode.UP;
+                nextRootKey = ajl.def.keyCode.RIGHT;
+                prevRootKey = ajl.def.keyCode.LEFT;
+                nextChildKey = ajl.def.keyCode.DOWN;
+                prevChildKey = ajl.def.keyCode.UP;
                 break;
         }
 
-        if (e.keyCode === nextKey) {
+        if (e.keyCode === nextChildKey) {
             e.preventDefault();
 
             if (e.target.nextElementSibling && e.target.nextElementSibling.tagName.toLowerCase() === "ul") {
@@ -90,17 +96,45 @@ ajl.Menu.prototype = {
                 this.clearTimer(true);
             } else if (e.target.parentNode.nextElementSibling) {
                 nextFocusId = menuId + 1;
+
+                if (this.firstLevelMenuItems.indexOf(menuId) > -1 &&
+                    this.firstLevelMenuItems.indexOf(nextFocusId) > -1) {
+                    return;
+                }
+
                 this.allMenuItems[nextFocusId].focus();
             }
-        } else if (e.keyCode === prevKey) {
+        } else if (e.keyCode === prevChildKey) {
             e.preventDefault();
 
             if (e.target.parentNode.previousElementSibling) {
                 nextFocusId = menuId - 1;
+
+                if (this.firstLevelMenuItems.indexOf(menuId) > -1 &&
+                    this.firstLevelMenuItems.indexOf(nextFocusId) > -1) {
+                    return;
+                }
+
                 this.allMenuItems[nextFocusId].focus();
             } else if (e.target.parentNode.parentNode !== this.elem) {
                 nextFocusId = menuId - 1;
                 this.allMenuItems[nextFocusId].focus();
+            }
+        } else if (e.keyCode === nextRootKey) {
+            if (e.target.getAttribute("role") === "menuitem") {
+                arrayIndex = this.firstLevelMenuItems.indexOf(menuId);
+                nextFocusId = this.firstLevelMenuItems[arrayIndex + 1];
+                if (nextFocusId) {
+                    this.allMenuItems[nextFocusId].focus();
+                }
+            }
+        } else if (e.keyCode === prevRootKey) {
+            if (e.target.getAttribute("role") === "menuitem") {
+                arrayIndex = this.firstLevelMenuItems.indexOf(menuId);
+                nextFocusId = this.firstLevelMenuItems[arrayIndex - 1];
+                if (nextFocusId > -1) {
+                    this.allMenuItems[nextFocusId].focus();
+                }
             }
         }
     },
@@ -131,10 +165,20 @@ ajl.Menu.prototype = {
         for (i = 0, nItems = menuItems.length; i < nItems; i += 1) {
             subMenu = menuItems[i].nextElementSibling;
 
+            // if (i > 0) {
+            //     menuItems[i].removeAttribute("tabindex");
+            // }
+
             ajl.event.remove(
                 menuItems[i],
                 "mouseover, focus",
                 this.methodStack.show,
+                false
+            );
+            ajl.event.remove(
+                menuItems[i],
+                "keydown",
+                this.methodStack.keydown,
                 false
             );
 
@@ -212,15 +256,26 @@ ajl.Menu.prototype = {
 
         for (i = 0, nItems = menuItems.length; i < nItems; i += 1) {
             this.allMenuItems.push(menuItems[i]);
+            this.firstLevelMenuItems.push(menuId);
             menuItems[i].setAttribute("role", "menuitem");
             menuItems[i].setAttribute("data-item", menuId);
             menuId += 1;
             subMenu = menuItems[i].nextElementSibling;
 
+            // if (i > 0) {
+            //     menuItems[i].setAttribute("tabindex", "-1");
+            // }
+
             ajl.event.add(
                 menuItems[i],
                 "mouseover, focus",
                 this.methodStack.show,
+                false
+            );
+            ajl.event.add(
+                menuItems[i],
+                "keydown",
+                this.methodStack.keydown,
                 false
             );
 
