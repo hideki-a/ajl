@@ -41,9 +41,14 @@ ajl.Menu.prototype = {
             this.timerId = setTimeout(ajl.util.proxy(this, function () {
                 var openMenu = this.stack.shift();
 
+                if (!openMenu) {
+                    return;
+                }
+
                 ajl.util.removeClass(openMenu, this.options.activeClassName);
                 openMenu.setAttribute("aria-expanded", "false");
                 openMenu.setAttribute("aria-hidden", "true");
+                this.timerId = null;
             }), this.options.closeWaitTime);
         }
     },
@@ -187,6 +192,7 @@ ajl.Menu.prototype = {
                 subMenu.removeAttribute("tabindex");
                 subMenu.removeAttribute("aria-expanded");
                 subMenu.removeAttribute("aria-hidden");
+                ajl.util.removeClass(subMenu, this.options.activeClassName);
                 ajl.event.remove(
                     menuItems[i],
                     "mouseout, blur",
