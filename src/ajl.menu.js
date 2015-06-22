@@ -37,19 +37,21 @@ ajl.Menu.prototype = {
     },
 
     hideMenu: function () {
+        var openMenu = this.stack.shift();
+
+        if (!openMenu) {
+            return;
+        }
+
+        ajl.util.removeClass(openMenu, this.options.activeClassName);
+        openMenu.setAttribute("aria-expanded", "false");
+        openMenu.setAttribute("aria-hidden", "true");
+        this.timerId = null;
+    },
+
+    hideMenuHandler: function () {
         if (this.stack.length > 0 && !this.timerId) {
-            this.timerId = setTimeout(ajl.util.proxy(this, function () {
-                var openMenu = this.stack.shift();
-
-                if (!openMenu) {
-                    return;
-                }
-
-                ajl.util.removeClass(openMenu, this.options.activeClassName);
-                openMenu.setAttribute("aria-expanded", "false");
-                openMenu.setAttribute("aria-hidden", "true");
-                this.timerId = null;
-            }), this.options.closeWaitTime);
+            this.timerId = setTimeout(ajl.util.proxy(this, this.hideMenu), this.options.closeWaitTime);
         }
     },
 
@@ -96,6 +98,10 @@ ajl.Menu.prototype = {
             e.preventDefault();
 
             if (e.target.nextElementSibling && e.target.nextElementSibling.tagName.toLowerCase() === "ul") {
+                if (this.stack.length === 0) {
+                    this.showMenu(e);
+                }
+
                 nextFocusId = menuId + 1;
                 this.allMenuItems[nextFocusId].focus();
                 this.clearTimer(true);
@@ -130,6 +136,7 @@ ajl.Menu.prototype = {
                 arrayIndex = this.firstLevelMenuItems.indexOf(menuId);
                 nextFocusId = this.firstLevelMenuItems[arrayIndex + 1];
                 if (nextFocusId) {
+                    this.hideMenu();
                     this.allMenuItems[nextFocusId].focus();
                 }
             }
@@ -138,6 +145,7 @@ ajl.Menu.prototype = {
                 arrayIndex = this.firstLevelMenuItems.indexOf(menuId);
                 nextFocusId = this.firstLevelMenuItems[arrayIndex - 1];
                 if (nextFocusId > -1) {
+                    this.hideMenu();
                     this.allMenuItems[nextFocusId].focus();
                 }
             }
@@ -176,7 +184,7 @@ ajl.Menu.prototype = {
 
             ajl.event.remove(
                 menuItems[i],
-                "mouseover, focus",
+                "mouseover",
                 this.methodStack.show,
                 false
             );
@@ -249,7 +257,7 @@ ajl.Menu.prototype = {
         menuItems = this.options.collect(this.generateId);
 
         this.methodStack.show = ajl.util.proxy(this, this.showMenu);
-        this.methodStack.hide = ajl.util.proxy(this, this.hideMenu);
+        this.methodStack.hide = ajl.util.proxy(this, this.hideMenuHandler);
         this.methodStack.timer = ajl.util.proxy(this, this.clearTimer);
         this.methodStack.keydown = ajl.util.proxy(this, this.keydownEventHandler);
 
@@ -274,7 +282,7 @@ ajl.Menu.prototype = {
 
             ajl.event.add(
                 menuItems[i],
-                "mouseover, focus",
+                "mouseover",
                 this.methodStack.show,
                 false
             );
