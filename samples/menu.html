@@ -39,6 +39,12 @@
 	text-decoration: none;
 }
 
+.nav-global .has-child > a {
+	background-image: url(images/blt_arrow_down_01.png);
+	background-repeat: no-repeat;
+	background-position: 10px center;
+}
+
 .nav-global li a:hover,
 .nav-global li a:active,
 .nav-global li a:focus {
@@ -198,7 +204,7 @@
 
 <nav id="menu" role="navigation" class="nav-global">
 <ul class="js-menu"><!--
---><li><a href="#">診療のご案内</a>
+--><li class="has-child"><a href="#">診療のご案内</a>
 <ul>
 <li><a href="#">外来診療</a></li>
 <li><a href="#">専門診療</a></li>
@@ -206,7 +212,7 @@
 <li><a href="#">設備・機器</a></li>
 </ul>
 </li><!--
---><li><a href="#">健康診断</a>
+--><li class="has-child"><a href="#">健康診断</a>
 <ul>
 <li><a href="#">一般健康診断</a></li>
 <li><a href="#">特定健診</a></li>
@@ -215,7 +221,7 @@
 <li><a href="#">原爆検診</a></li>
 </ul>
 </li><!--
---><li><a href="#">訪問看護</a>
+--><li class="has-child"><a href="#">訪問看護</a>
 <ul>
 <li><a href="#">訪問看護</a></li>
 <li><a href="#">訪問診療</a></li>
