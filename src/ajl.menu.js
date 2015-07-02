@@ -42,6 +42,7 @@ ajl.Menu.prototype = {
             return;
         }
 
+        ajl.util.removeClass(openMenu.previousElementSibling, this.options.activeClassName);
         ajl.util.removeClass(openMenu, this.options.activeClassName);
         openMenu.setAttribute("aria-expanded", "false");
         openMenu.setAttribute("aria-hidden", "true");
@@ -67,6 +68,7 @@ ajl.Menu.prototype = {
         }
 
         if (targetMenu) {
+            ajl.util.addClass(e.currentTarget, this.options.activeClassName);
             ajl.util.addClass(targetMenu, this.options.activeClassName);
             targetMenu.setAttribute("aria-expanded", "true");
             targetMenu.setAttribute("aria-hidden", "false");
