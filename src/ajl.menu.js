@@ -55,7 +55,7 @@ ajl.Menu.prototype = {
     },
 
     showMenu: function (e) {
-        var targetMenu = e.target.nextElementSibling,
+        var targetMenu = e.currentTarget.nextElementSibling,
             openMenu;
 
         if (this.stack.length > 0) {
