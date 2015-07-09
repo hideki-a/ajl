@@ -62,6 +62,7 @@ ajl.Menu.prototype = {
         if (this.stack.length > 0) {
             this.clearTimer();
             openMenu = this.stack.shift();
+            ajl.util.removeClass(openMenu.previousElementSibling, this.options.activeClassName);
             ajl.util.removeClass(openMenu, this.options.activeClassName);
             openMenu.setAttribute("aria-expanded", "false");
             openMenu.setAttribute("aria-hidden", "true");
