@@ -67,7 +67,8 @@ ajl.SmoothScroll.prototype = {
         window.scrollTo(0, moveY);
         this.start = moveY;
 
-        if (moveY > this.dest) {
+        if (this.direction === "up" && moveY > this.dest ||
+            this.direction === "down" && moveY < this.dest) {
             window.requestAnimationFrame(ajl.util.proxy(this, this.doScroll));
         } else {
             return;
