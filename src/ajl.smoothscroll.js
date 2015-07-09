@@ -34,7 +34,7 @@ ajl.SmoothScroll.prototype = {
 
         if (documentHeight - viewportHeight < this.dest) {
             this.dest = documentHeight - viewportHeight;
-        } else if (this.dest === 0) {
+        } else if (this.dest <= 0) {
             this.dest = 1;
         }
 
@@ -66,7 +66,12 @@ ajl.SmoothScroll.prototype = {
 
         window.scrollTo(0, moveY);
         this.start = moveY;
-        window.requestAnimationFrame(ajl.util.proxy(this, this.doScroll));
+
+        if (moveY > this.dest) {
+            window.requestAnimationFrame(ajl.util.proxy(this, this.doScroll));
+        } else {
+            return;
+        }
     },
 
     init: function () {
