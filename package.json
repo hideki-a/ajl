@@ -5,7 +5,8 @@
   "main": "gulpfile.coffee",
   "scripts": {
     "start": "gulp",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp build"
   },
   "author": "Hideki Abe",
   "license": "MIT",
