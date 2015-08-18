@@ -29,10 +29,10 @@ ajl.TelLink.prototype = {
 
         Array.prototype.forEach.call(targets, function (elem) {
             var anchor = document.createElement("a"),
-                tel = elem.innerText;
+                tel = elem.innerHTML;
 
             anchor.setAttribute("href", "tel:" + tel.replace(/\-/g, ""));
-            anchor.innerText = tel;
+            anchor.innerHTML = tel;
             elem.parentNode.replaceChild(anchor, elem);
         });
     }
