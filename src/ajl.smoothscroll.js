@@ -16,6 +16,7 @@ ajl.SmoothScroll = function (elem, options) {
     this.defaults = {
         excludeCond: /tab_/,
         paddingTop: 0,
+        pageTop: false,
         v: 20,    // The value which influences speed.
         moveFocus: false,    // 試験実装中のため
         pagetopId: "header"
@@ -25,6 +26,18 @@ ajl.SmoothScroll = function (elem, options) {
 };
 
 ajl.SmoothScroll.prototype = {
+    scrollFinish: function () {
+        if (this.options.moveFocus) {
+            if (this.targetId === this.options.pagetopId) {
+                this.pagetopIdsChildNodes.focus();
+            } else if (this.options.pageTop) {
+                this.pagetopIdsChildNodes.focus();
+            } else {
+                this.targetElem.focus();
+            }
+        }
+    },
+
     startScroll: function () {
         var documentHeight = document.documentElement.scrollHeight,
             viewportHeight = document.documentElement.clientHeight;
@@ -53,14 +66,7 @@ ajl.SmoothScroll.prototype = {
         } else if (this.direction === "down" && this.dest > this.start) {
             moveY = Math.ceil(this.start + (this.dest - this.start) / this.options.v + 1);
         } else {
-            if (this.options.moveFocus) {
-                if (this.targetId === this.options.pagetopId) {
-                    this.pagetopIdsChildNodes.focus();
-                } else {
-                    this.targetElem.focus();
-                }
-            }
-
+            this.scrollFinish();
             return;
         }
 
@@ -71,11 +77,14 @@ ajl.SmoothScroll.prototype = {
             this.direction === "down" && moveY < this.dest) {
             window.requestAnimationFrame(ajl.util.proxy(this, this.doScroll));
         } else {
+            this.scrollFinish();
             return;
         }
     },
 
     init: function () {
+        var pageTopElem;
+
         this.targetId = this.elem.getAttribute("href").replace(/(https?:\/\/[a-zA-Z0-9\.%\/]+)?\#/, "");
         this.targetElem = document.getElementById(this.targetId);
 
@@ -83,6 +92,10 @@ ajl.SmoothScroll.prototype = {
             if (this.options.moveFocus) {
                 if (this.targetId === this.options.pagetopId) {
                     this.pagetopIdsChildNodes = this.targetElem.children[0];
+                    this.pagetopIdsChildNodes.setAttribute("tabindex", "-1");
+                } else if (this.options.pageTop) {
+                    pageTopElem = document.getElementById(this.options.pagetopId);
+                    this.pagetopIdsChildNodes = pageTopElem.children[0];
                     this.pagetopIdsChildNodes.setAttribute("tabindex", "-1");
                 } else {
                     this.targetElem.setAttribute("tabindex", "-1");
