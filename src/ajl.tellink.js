@@ -32,7 +32,7 @@ ajl.TelLink.prototype = {
                 tel = elem.innerHTML;
 
             anchor.setAttribute("href", "tel:" + tel.replace(/\-/g, ""));
-            anchor.innerHTML = tel;
+            anchor.textContent = tel;
             elem.parentNode.replaceChild(anchor, elem);
         });
     }
