@@ -16,9 +16,9 @@ ajl.Menu = function (elem, options) {
     this.defaults = {
         activeClassName: "active",
         closeWaitTime: 1000,
-        direction: "down", 
+        direction: "down",
         collect: function (id) {
-            return document.querySelectorAll("#" + id + " > li > a");
+            return document.querySelectorAll("#" + id + " > li > a, #" + id + " > li > em > a");
         }
     };
 
@@ -56,8 +56,14 @@ ajl.Menu.prototype = {
     },
 
     showMenu: function (e) {
-        var targetMenu = e.currentTarget.nextElementSibling,
+        var targetMenu,
             openMenu;
+
+        if (e.currentTarget.parentNode.tagName.toLowerCase() === "em") {
+            targetMenu = e.currentTarget.parentNode.nextElementSibling;
+        } else {
+            targetMenu = e.currentTarget.nextElementSibling;
+        }
 
         if (this.stack.length > 0) {
             this.clearTimer();
@@ -105,7 +111,8 @@ ajl.Menu.prototype = {
         if (e.keyCode === nextChildKey) {
             e.preventDefault();
 
-            if (e.target.nextElementSibling && e.target.nextElementSibling.tagName.toLowerCase() === "ul") {
+            if ((e.target.parentNode.tagName.toLowerCase() === "em" && e.target.parentNode.nextElementSibling.tagName.toLowerCase() === "ul") ||
+                (e.target.nextElementSibling && e.target.nextElementSibling.tagName.toLowerCase() === "ul")) {
                 if (this.stack.length === 0) {
                     this.showMenu(e);
                 }
@@ -281,7 +288,9 @@ ajl.Menu.prototype = {
             menuItems[i].setAttribute("role", "menuitem");
             menuItems[i].setAttribute("data-item", menuId);
             menuId += 1;
-            subMenu = menuItems[i].nextElementSibling;
+            subMenu = menuItems[i].parentNode.tagName.toLowerCase() === "em" ?
+                        menuItems[i].parentNode.nextElementSibling :
+                        menuItems[i].nextElementSibling;
 
             // if (i > 0) {
             //     menuItems[i].setAttribute("tabindex", "-1");
