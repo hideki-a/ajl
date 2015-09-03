@@ -8,7 +8,8 @@
 ajl.CurrentNav = function (elem, options) {
     this.elem = elem;
     this.defaults = {
-        replace: false
+        replace: false,
+        depth: 1
     };
 
     this.options = ajl.util.deepExtend({}, this.defaults, options);
@@ -17,16 +18,30 @@ ajl.CurrentNav = function (elem, options) {
 ajl.CurrentNav.prototype = {
     init: function () {
         var currentPath = location.pathname,
-            directoryIndex = /index\.(html?|php|cgi)$/,
+            filename = /[^\/]*\.(html?|php|cgi)$/,
             elem,
             content,
-            parent;
+            parent,
+            paths,
+            searchPath = "/",
+            i,
+            emElem;
 
-        if (directoryIndex.test(currentPath)) {
-            currentPath = currentPath.replace(directoryIndex, "");
+        // ファイル名の除去
+        if (filename.test(currentPath)) {
+            currentPath = currentPath.replace(filename, "");
         }
 
-        elem = this.elem.querySelector("a[href=\"" + currentPath + "\"]");
+        // 階層ごとに分割して配列に格納
+        paths = currentPath.replace(/^\//, "").split("/");
+
+        // depth設定値に応じてパスを生成
+        for (i = 0; i < this.options.depth; i += 1) {
+            searchPath += paths[i] + "/";
+        }
+
+        // マッチするアイテムを検索
+        elem = this.elem.querySelector("a[href=\"" + searchPath + "\"]");
 
         if (elem) {
             if (this.options.replace) {
@@ -34,8 +49,10 @@ ajl.CurrentNav.prototype = {
                 elem.outerHTML = "<em>" + content + "</em>";
             } else {
                 parent = elem.parentNode;
-                content = parent.innerHTML;
-                parent.innerHTML = "<em>" + content + "</em>";
+                content = parent.getElementsByTagName("a")[0];
+                emElem = document.createElement("em");
+                emElem.appendChild(content);
+                parent.insertAdjacentHTML("afterbegin", emElem.outerHTML);
             }
         }
     }
