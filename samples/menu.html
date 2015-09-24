@@ -215,7 +215,7 @@
 <li><a href="#">設備・機器</a></li>
 </ul>
 </li><!--
---><li class="has-child"><a href="#">健康診断</a>
+--><li class="has-child"><a href="http://lab-inc.jp/">健康診断</a>
 <ul>
 <li><a href="#">一般健康診断</a></li>
 <li><a href="#">特定健診</a></li>
@@ -258,5 +258,10 @@ btnReInit.addEventListener("click", function () {
 <!-- for Bootstrap Theme's scripts -->
 <script src="js/jquery-1.11.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script>
+window.addEventListener("unload", function () {
+    console.log("unload");
+});
+</script>
 </body>
 </html>

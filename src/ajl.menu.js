@@ -49,7 +49,12 @@ ajl.Menu.prototype = {
         this.timerId = null;
     },
 
-    hideMenuHandler: function () {
+    hideMenuHandler: function (e) {
+        if (navigator.userAgent.indexOf("Android") > -1 && e.type === "mousedown") {
+            e.preventDefault();
+            return false;
+        }
+
         if (this.stack.length > 0 && !this.timerId) {
             this.timerId = setTimeout(ajl.util.proxy(this, this.hideMenu), this.options.closeWaitTime);
         }
@@ -58,6 +63,11 @@ ajl.Menu.prototype = {
     showMenu: function (e) {
         var targetMenu,
             openMenu;
+
+        if ((navigator.userAgent.indexOf("Android") > -1 || 
+            !ajl.util.hasClass(e.currentTarget, this.options.activeClassName)) {
+            e.preventDefault();
+        }
 
         if (e.currentTarget.parentNode.tagName.toLowerCase() === "em") {
             targetMenu = e.currentTarget.parentNode.nextElementSibling;
@@ -298,7 +308,7 @@ ajl.Menu.prototype = {
 
             ajl.event.add(
                 menuItems[i],
-                "mouseover",
+                "mouseover, touchstart, touchend",
                 this.methodStack.show,
                 false
             );
