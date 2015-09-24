@@ -64,7 +64,7 @@ ajl.Menu.prototype = {
         var targetMenu,
             openMenu;
 
-        if ((navigator.userAgent.indexOf("Android") > -1 || 
+        if (navigator.userAgent.indexOf("Android") > -1 && 
             !ajl.util.hasClass(e.currentTarget, this.options.activeClassName)) {
             e.preventDefault();
         }
@@ -257,6 +257,15 @@ ajl.Menu.prototype = {
                     false
                 );
 
+                if (navigator.userAgent.indexOf("Android") > -1) {
+                    ajl.event.remove(
+                        menuItems[i],
+                        "touchstart, touchend",
+                        this.methodStack.show,
+                        false
+                    );
+                }
+
                 subMenuItems = subMenu.querySelectorAll("li a");
                 for (j = 0, nSubMenuItems = subMenuItems.length; j < nSubMenuItems; j += 1) {
                     subMenuItems[j].removeAttribute("tabindex");
@@ -308,7 +317,7 @@ ajl.Menu.prototype = {
 
             ajl.event.add(
                 menuItems[i],
-                "mouseover, touchstart, touchend",
+                "mouseover",
                 this.methodStack.show,
                 false
             );
@@ -349,6 +358,15 @@ ajl.Menu.prototype = {
                     this.methodStack.keydown,
                     false
                 );
+
+                if (navigator.userAgent.indexOf("Android") > -1) {
+                    ajl.event.add(
+                        menuItems[i],
+                        "touchstart, touchend",
+                        this.methodStack.show,
+                        false
+                    );
+                }
 
                 subMenuItems = subMenu.querySelectorAll("li a");
                 for (j = 0, nSubMenuItems = subMenuItems.length; j < nSubMenuItems; j += 1) {
