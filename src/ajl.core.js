@@ -116,18 +116,21 @@ ajl.util = {
         if (elem.classList) {
             elem.classList.remove(className);
         } else {
-            after = before.replace(
-                new RegExp("(^|\\b)" + className.split(" ").join("|") + "(\\b|$)", "gi"),
-                " "
+            elem.className = elem.className.replace(
+                new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' '
             );
+            // after = before.replace(
+            //     new RegExp("(^|\\b)" + className.split(" ").join("|") + "(\\b|$)", "gi"),
+            //     " "
+            // );
 
-            if (before !== after) {
-                if (/\s+/.test(after)) {
-                    elem.removeAttribute("class");
-                } else {
-                    elem.className = after;
-                }
-            }
+            // if (before !== after) {
+            //     if (/\s+/.test(after)) {
+            //         elem.removeAttribute("class");
+            //     } else {
+            //         elem.className = after;
+            //     }
+            // }
         }
     },
 
