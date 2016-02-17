@@ -86,6 +86,11 @@ ajl.SmoothScroll.prototype = {
         var pageTopElem;
 
         this.targetId = this.elem.getAttribute("href").replace(/(https?:\/\/[a-zA-Z0-9\.%\/]+)?\#/, "");
+
+        if (!this.targetId) {
+            return;
+        }
+
         this.targetElem = document.getElementById(this.targetId);
 
         if (!this.options.excludeCond.test(this.targetId) && this.targetElem) {
