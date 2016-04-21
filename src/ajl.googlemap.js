@@ -176,6 +176,9 @@ ajl.GoogleMap.prototype = {
         );
         options.zoom = self.options.mapOptions.zoom;
         options.mapTypeId = self.options.mapType;
+        options.scrollwheel = self.options.mapOptions.scrollwheel;
+        options.draggable = self.options.mapOptions.draggable;
+        options.mapTypeControl = self.options.mapOptions.mapTypeControl;
         this.map = new google.maps.Map(div, options);
         this._setMarkers();
 
