@@ -45,6 +45,10 @@ ajl.GoogleMap.prototype = {
             src += "false";
         }
 
+        if (this.options.key) {
+            src += "key=" + this.options.key;
+        }
+
         if (cbName) {
             src += "&callback=" + cbName;
         }
