@@ -88,6 +88,7 @@ ajl.GoogleMap.prototype = {
             latLng,
             nMarkers = this.options.markers.length,
             i,
+            infoWindow,
             handler = function () {
                 self._ctrlInfoWindow(this, self);
             };
@@ -105,7 +106,7 @@ ajl.GoogleMap.prototype = {
             });
 
             if (this.options.markers[i].content) {
-                this.markers[i].infoWindow = new google.maps.InfoWindow({
+                infoWindow = this.markers[i].infoWindow = new google.maps.InfoWindow({
                     content: this.options.markers[i].content
                 });
                 google.maps.event.addListener(
@@ -113,6 +114,19 @@ ajl.GoogleMap.prototype = {
                     "click",
                     handler
                 );
+                google.maps.event.addListener(
+                    infoWindow,
+                    "closeclick",
+                    function () {
+                        google.maps.event.addListenerOnce(this.markers[i], "click", function () {
+                            infoWindow.open(this.map, this.markers[i]);
+                        });
+                    }
+                );
+
+                if (this.options.markers[i].openOnLoad) {
+                    infoWindow.open(this.map, this.markers[i]);
+                }
             }
         }
     },
