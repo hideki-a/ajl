@@ -18,7 +18,11 @@ ajl.Menu = function (elem, options) {
         closeWaitTime: 1000,
         direction: "down",
         collect: function (id) {
-            return document.querySelectorAll("#" + id + " > li > a, #" + id + " > li > em > a");
+            var selector = "#" + id + " > li > a, #" +
+                            id + " > li > em > a, #" +
+                            id + " > li > .js-haschild, #" +
+                            id + " > li > em > .js-haschild";
+            return document.querySelectorAll(selector);
         }
     };
 
@@ -64,7 +68,7 @@ ajl.Menu.prototype = {
         var targetMenu,
             openMenu;
 
-        if (navigator.userAgent.indexOf("Android") > -1 && 
+        if (navigator.userAgent.indexOf("Android") > -1 &&
             !ajl.util.hasClass(e.currentTarget, this.options.activeClassName)) {
             e.preventDefault();
         }
@@ -94,8 +98,9 @@ ajl.Menu.prototype = {
     },
 
     focusMenu: function (id) {
-        var nextFocusItem = document.querySelector("#" + this.generateId +
-                                " a[data-item='" + id + "']");
+        var selector = "#" + this.generateId + " a[data-item='" + id + "'], " +
+                        "#" + this.generateId + " .js-haschild[data-item='" + id + "']";
+        var nextFocusItem = document.querySelector(selector);
         nextFocusItem.focus();
     },
 
@@ -207,6 +212,10 @@ ajl.Menu.prototype = {
             //     menuItems[i].removeAttribute("tabindex");
             // }
 
+            if (ajl.util.hasClass(menuItems[i], "js-haschild")) {
+                menuItems[i].removeAttribute("tabindex");
+            }
+
             ajl.event.remove(
                 menuItems[i],
                 "mouseover",
@@ -314,6 +323,10 @@ ajl.Menu.prototype = {
             // if (i > 0) {
             //     menuItems[i].setAttribute("tabindex", "-1");
             // }
+
+            if (ajl.util.hasClass(menuItems[i], "js-haschild")) {
+                menuItems[i].setAttribute("tabindex", 0);
+            }
 
             ajl.event.add(
                 menuItems[i],
