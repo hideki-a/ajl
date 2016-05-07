@@ -25,6 +25,11 @@ ajl.CurrentNav.prototype = {
             i,
             emElem;
 
+        // 既にカレント処理がされている場合は終了
+        if (this.elem.querySelector("em")) {
+            return;
+        }
+
         // ファイル名の除去
         if (this.options.dirIndexPattern.test(currentPath)) {
             currentPath = currentPath.replace(filename, "");
