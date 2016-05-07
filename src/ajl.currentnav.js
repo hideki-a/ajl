@@ -9,7 +9,7 @@ ajl.CurrentNav = function (elem, options) {
     this.elem = elem;
     this.defaults = {
         replace: false,
-        depth: 1
+        dirIndexPattern: /index\.(html|php|cgi)$/
     };
 
     this.options = ajl.util.deepExtend({}, this.defaults, options);
@@ -18,30 +18,20 @@ ajl.CurrentNav = function (elem, options) {
 ajl.CurrentNav.prototype = {
     init: function () {
         var currentPath = location.pathname,
-            filename = /[^\/]*\.(html?|php|cgi)$/,
             elem,
             content,
             parent,
             paths,
-            searchPath = "/",
             i,
             emElem;
 
         // ファイル名の除去
-        if (filename.test(currentPath)) {
+        if (this.options.dirIndexPattern.test(currentPath)) {
             currentPath = currentPath.replace(filename, "");
         }
 
-        // 階層ごとに分割して配列に格納
-        paths = currentPath.replace(/^\//, "").split("/");
-
-        // depth設定値に応じてパスを生成
-        for (i = 0; i < this.options.depth; i += 1) {
-            searchPath += paths[i] + "/";
-        }
-
         // マッチするアイテムを検索
-        elem = this.elem.querySelector("a[href=\"" + searchPath + "\"]");
+        elem = this.elem.querySelector("a[href=\"" + currentPath + "\"]");
 
         if (elem) {
             if (this.options.replace) {
