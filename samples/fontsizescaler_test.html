@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<title>ajl FontsizeScaler</title>
+</head>
+
+<body>
+<div class="container">
+<div class="page-header">
+<h1>ajl FontsizeScaler</h1>
+</div><!-- /.page-header -->
+
+<div style="margin-bottom: 1em;"><a href="fontsizescaler.html">1ページ目</a></div>
+
+<ul class="js-fontsize">
+<li><a href="#large">Large</a></li>
+<li><a href="#default">Default</a></li>
+<li><a href="#small">Small</a></li>
+</ul>
+
+</div><!-- /.container -->
+
+<footer role="contentinfo" class="docs-footer">
+<p>Code licensed under <a href="http://opensource.org/licenses/MIT" target="_blank">MIT</a>, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+</footer>
+
+<!-- load ajl -->
+<script src="../src/ajl.core.js"></script>
+<script src="../src/ajl.fontsizescaler.js"></script>
+<script>
+ajl.enable.fontsizeScaler(".js-fontsize", { key: "fontsizescale_test" });
+</script>
+</body>
+</html>
