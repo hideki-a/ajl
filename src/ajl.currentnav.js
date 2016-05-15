@@ -58,7 +58,7 @@ ajl.CurrentNav.prototype = {
         }
 
         // マッチするアイテムを検索
-        elem = this.elem.querySelector("a[href=\"" + searchPath + "\"]");
+        elem = this.elem.querySelector("a[href$=\"" + searchPath + "\"]");
 
         if (elem) {
             if (this.options.replace) {
