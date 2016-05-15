@@ -34,7 +34,7 @@ ajl.CurrentNav.prototype = {
 
         // ファイル名の除去
         if (this.options.dirIndexPattern.test(currentPath)) {
-            currentPath = currentPath.replace(filename, "");
+            currentPath = currentPath.replace(this.options.dirIndexPattern, "");
         }
 
         // 検索パスの決定
