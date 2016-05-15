@@ -14,7 +14,7 @@ ajl.FontsizeScaler = function (elem, options) {
     this.minimumFontsize = null;
     this.defaults = {
         collect: function (parent) {
-            return parent.querySelectorAll("a");
+            return parent.querySelectorAll("button");
         },
         key: "fontsizescaler"
     };
@@ -38,10 +38,8 @@ ajl.FontsizeScaler.prototype = {
     },
 
     _scaleFontsizeHandler: function (e) {
-        var scaleType = e.target.getAttribute("href").replace("#", "");
+        var scaleType = e.target.getAttribute("value");
         var targetSize;
-
-        e.preventDefault();
 
         if (scaleType === "large") {
             targetSize = parseInt(this.fontsize, 10) + 2;
