@@ -6,6 +6,24 @@
  * http://opensource.org/licenses/MIT
  *
  */
+ /*!
+ |*|
+ |*|  :: cookies.js ::
+ |*|
+ |*|  A complete cookies reader/writer framework with full unicode support.
+ |*|
+ |*|  https://developer.mozilla.org/en-US/docs/DOM/document.cookie
+ |*|
+ |*|  Syntaxes:
+ |*|
+ |*|  * docCookies.setItem(name, value[, end[, path[, domain[, secure]]]])
+ |*|  * docCookies.getItem(name)
+ |*|  * docCookies.removeItem(name[, path])
+ |*|  * docCookies.hasItem(name)
+ |*|  * docCookies.keys()
+ |*|
+ \*/
+
 (function (window, document) {
 "use strict";
 
@@ -169,23 +187,6 @@ ajl.util = {
 // https://developer.mozilla.org/ja/docs/Web/API/Document/cookie
 // docCookiesをajl.cookieとして取り込み。
 // ----------------------------------------------------------------------------
- /*!
- |*|
- |*|  :: cookies.js ::
- |*|
- |*|  A complete cookies reader/writer framework with full unicode support.
- |*|
- |*|  https://developer.mozilla.org/en-US/docs/DOM/document.cookie
- |*|
- |*|  Syntaxes:
- |*|
- |*|  * docCookies.setItem(name, value[, end[, path[, domain[, secure]]]])
- |*|  * docCookies.getItem(name)
- |*|  * docCookies.removeItem(name[, path])
- |*|  * docCookies.hasItem(name)
- |*|  * docCookies.keys()
- |*|
- \*/
 ajl.cookie = {
     getItem: function(sKey) {
         if (!sKey || !this.hasItem(sKey)) {
