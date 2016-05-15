@@ -31,7 +31,7 @@ ajl.TelLink.prototype = {
             var anchor = document.createElement("a"),
                 tel = elem.innerHTML;
 
-            anchor.setAttribute("href", "tel:" + tel.replace(/\-/g, ""));
+            anchor.setAttribute("href", "tel:" + tel.replace(/[\-\(\)（）]/g, ""));
             anchor.textContent = tel;
             elem.parentNode.replaceChild(anchor, elem);
         });
