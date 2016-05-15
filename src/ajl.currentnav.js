@@ -44,13 +44,15 @@ ajl.CurrentNav.prototype = {
 
             // depth設定値に応じてパスを生成
             for (i = 0; i < this.options.depth; i += 1) {
-                searchPath += paths[i] + "/";
+                if (paths[i]) {
+                    searchPath += paths[i] + "/";
+                }
             }
 
             // dirIndexPattern以外のファイル名の場合はsearchPathに追加
-            if (/\.\w+$/.test(paths[this.options.depth])) {
-                searchPath += paths[this.options.depth];
-            }
+            // if (/\.\w+$/.test(paths[this.options.depth])) {
+            //     searchPath += paths[this.options.depth];
+            // }
         } else {
             searchPath = currentPath;
         }
