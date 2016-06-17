@@ -20,7 +20,6 @@ ajl.GoogleMap = function (elem, options) {
     };
     this.defaults = {
         dynamicOnly: false,
-        sensor: false,
         className: "dynamicmap",
         mapOptions: null,
         language: "ja",
@@ -37,13 +36,7 @@ ajl.GoogleMap.prototype = {
         var script = document.createElement("script"),
             src;
 
-        src = "http://maps.googleapis.com/maps/api/js?sensor=";
-
-        if (this.options.sensor) {
-            src += "true";
-        } else {
-            src += "false";
-        }
+        src = "http://maps.googleapis.com/maps/api/js?";
 
         if (this.options.key) {
             src += "key=" + this.options.key;
