@@ -7,12 +7,12 @@
 // TODO: this.defaults.vの改名
 //       フォーカスの移動
 ajl.SmoothScroll = function (elem, options) {
-    this.elem = elem;
-    this.targetId = null;
-    this.targetElem = null;
-    this.start = 0;
-    this.dest = 0;
-    this.direction = null;
+    this.elem = elem;           // a要素
+    this.targetId = null;       // a要素のhref属性に記載のID名
+    this.targetElem = null;     // a要素のhref属性で指定された要素
+    this.start = 0;             // スクロール開始位置
+    this.dest = 0;              // スクロール完了位置
+    this.direction = null;      // スクロールの方向
     this.defaults = {
         excludeCond: /tab_/,
         paddingTop: 0,
