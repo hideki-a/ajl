@@ -36,7 +36,7 @@ ajl.GoogleMap.prototype = {
         var script = document.createElement("script"),
             src;
 
-        src = "http://maps.googleapis.com/maps/api/js?";
+        src = "//maps.googleapis.com/maps/api/js?";
 
         if (this.options.key) {
             src += "key=" + this.options.key;
