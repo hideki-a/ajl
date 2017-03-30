@@ -8,6 +8,7 @@
 ajl.CurrentNav = function (elem, options) {
     this.elem = elem;
     this.defaults = {
+        ariaCurrent: false,
         replace: false,
         depth: null,
         dirIndexPattern: /index\.(html|php|cgi)$/
@@ -61,7 +62,9 @@ ajl.CurrentNav.prototype = {
         elem = this.elem.querySelector("a[href$=\"" + searchPath + "\"]");
 
         if (elem) {
-            if (this.options.replace) {
+            if (this.options.ariaCurrent) {
+                elem.setAttribute("aria-current", "true");
+            } else if (this.options.replace) {
                 content = elem.innerHTML;
                 elem.outerHTML = "<em>" + content + "</em>";
             } else {
