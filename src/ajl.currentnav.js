@@ -59,7 +59,11 @@ ajl.CurrentNav.prototype = {
         }
 
         // マッチするアイテムを検索
-        elem = this.elem.querySelector("a[href$=\"" + searchPath + "\"]");
+        if (searchPath === "/") {
+            elem = this.elem.querySelector("a[href=\"" + searchPath + "\"]");
+        } else {
+            elem = this.elem.querySelector("a[href$=\"" + searchPath + "\"]");
+        }
 
         if (elem) {
             if (this.options.ariaCurrent) {
