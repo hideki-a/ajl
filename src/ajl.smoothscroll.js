@@ -41,10 +41,11 @@ ajl.SmoothScroll.prototype = {
 
     startScroll: function () {
         var documentHeight = document.documentElement.scrollHeight,
-            viewportHeight = document.documentElement.clientHeight;
+            viewportHeight = document.documentElement.clientHeight,
+            rect = this.targetElem.getBoundingClientRect();
 
         this.start = window.pageYOffset || document.documentElement.scrollTop;
-        this.dest = this.targetElem.offsetTop - this.options.paddingTop;
+        this.dest = rect.top + window.pageYOffset - this.options.paddingTop;
 
         if (documentHeight - viewportHeight < this.dest) {
             this.dest = documentHeight - viewportHeight;
