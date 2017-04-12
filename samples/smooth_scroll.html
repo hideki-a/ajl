@@ -94,7 +94,11 @@ div{
 ajl.enable.smoothScroll("a[href^='#']", {
     paddingTop: 70,
     moveFocus: true,
-    pagetopId: "pagetop"
+    pagetopId: "pagetop",
+    easing: function (t) {
+        // https://gist.github.com/gre/1650294
+        return t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1;
+    }
 });
 </script>
 

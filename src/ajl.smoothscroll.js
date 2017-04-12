@@ -14,13 +14,17 @@ ajl.SmoothScroll = function (elem, options) {
     this.start = 0;             // スクロール開始位置
     this.dest = 0;              // スクロール完了位置
     this.direction = null;      // スクロールの方向
+    this.elapsedTime = 0;
+    this.frameRate = 1000 / 60;
     this.defaults = {
         excludeCond: /tab_/,
         paddingTop: 0,
         pageTop: false,
         v: 20,    // The value which influences speed.
+        duration: 2000,
         moveFocus: false,    // 試験実装中のため
-        pagetopId: "header"
+        pagetopId: "header",
+        easing: null
     };
 
     this.options = ajl.util.deepExtend({}, this.defaults, options);
@@ -47,6 +51,7 @@ ajl.SmoothScroll.prototype = {
             viewportHeight = document.documentElement.clientHeight,
             rect = this.targetElem.getBoundingClientRect();
 
+        this.elapsedTime = 0;
         this.start = window.pageYOffset || document.documentElement.scrollTop;
         this.dest = rect.top + window.pageYOffset - this.options.paddingTop;
 
@@ -63,25 +68,44 @@ ajl.SmoothScroll.prototype = {
 
     doScroll: function () {
         var moveY;
+        var elapsedTimeRate = this.elapsedTime / this.options.duration;
+        var valueChangeRate;
 
         if (this.direction === "up" && this.start > this.dest) {
-            moveY = Math.floor(this.start - (this.start - this.dest) / this.options.v - 1);
+            if (this.options.easing) {
+                valueChangeRate = this.options.easing(elapsedTimeRate);
+                moveY = this.start - Math.floor((this.start - this.dest) * valueChangeRate) - 1;
+            } else {
+                moveY = Math.floor(this.start - (this.start - this.dest) / this.options.v - 1);
+            }
+
             if (moveY <= 1) {
                 moveY = 1;
             }
         } else if (this.direction === "down" && this.dest > this.start) {
-            moveY = Math.ceil(this.start + (this.dest - this.start) / this.options.v + 1);
+            if (this.options.easing) {
+                valueChangeRate = this.options.easing(elapsedTimeRate);
+                moveY = this.start + Math.ceil((this.dest - this.start) * valueChangeRate) + 1;
+            } else {
+                moveY = Math.ceil(this.start + (this.dest - this.start) / this.options.v + 1);
+            }
         } else {
             this.scrollFinish();
             return;
         }
 
         window.scrollTo(0, moveY);
-        this.start = moveY;
+
+        if (this.options.easing) {
+            this.elapsedTime += this.frameRate;
+        } else {
+            this.start = moveY;
+        }
 
         if (this.direction === "up" && moveY > this.dest ||
             this.direction === "down" && moveY < this.dest) {
-            window.requestAnimationFrame(ajl.util.proxy(this, this.doScroll));
+            // window.requestAnimationFrame(ajl.util.proxy(this, this.doScroll));
+            window.setTimeout(ajl.util.proxy(this, this.doScroll), this.frameRate);
         } else {
             this.scrollFinish();
             return;
