@@ -10,6 +10,7 @@ ajl.SmoothScroll = function (elem, options) {
     this.elem = elem;           // a要素
     this.targetId = null;       // a要素のhref属性に記載のID名
     this.targetElem = null;     // a要素のhref属性で指定された要素
+    this.bodyElem = null;       // body要素
     this.start = 0;             // スクロール開始位置
     this.dest = 0;              // スクロール完了位置
     this.direction = null;      // スクロールの方向
@@ -27,6 +28,8 @@ ajl.SmoothScroll = function (elem, options) {
 
 ajl.SmoothScroll.prototype = {
     scrollFinish: function () {
+        ajl.util.removeClass(this.bodyElem, "js-smoothscroll-scrolling");
+
         if (this.options.moveFocus) {
             // if (this.targetId === this.options.pagetopId) {
             //     this.pagetopIdsChildNodes.focus();
@@ -54,6 +57,7 @@ ajl.SmoothScroll.prototype = {
         }
 
         this.direction = (this.dest - this.start > 0) ? "down" : "up";
+        ajl.util.addClass(this.bodyElem, "js-smoothscroll-scrolling");
         this.doScroll();
     },
 
@@ -94,6 +98,7 @@ ajl.SmoothScroll.prototype = {
         }
 
         this.targetElem = document.getElementById(this.targetId);
+        this.bodyElem = document.getElementsByTagName("body")[0];
 
         if (!this.options.excludeCond.test(this.targetId) && this.targetElem) {
             if (this.options.moveFocus) {
