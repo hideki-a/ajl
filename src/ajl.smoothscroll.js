@@ -22,7 +22,7 @@ ajl.SmoothScroll = function (elem, options) {
         pageTop: false,
         v: 20,    // The value which influences speed.
         duration: 2000,
-        moveFocus: false,    // 試験実装中のため
+        moveFocus: true,
         pagetopId: "header",
         easing: null
     };
