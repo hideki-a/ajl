@@ -15,13 +15,12 @@ ajl.SmoothScroll = function (elem, options) {
     this.dest = 0;              // スクロール完了位置
     this.direction = null;      // スクロールの方向
     this.elapsedTime = 0;
-    this.frameRate = 1000 / 60;
     this.defaults = {
         excludeCond: /tab_/,
         paddingTop: 0,
         pageTop: false,
         v: 20,    // The value which influences speed.
-        duration: 2000,
+        duration: 120,
         moveFocus: true,
         pagetopId: "header",
         easing: null
@@ -97,15 +96,14 @@ ajl.SmoothScroll.prototype = {
         window.scrollTo(0, moveY);
 
         if (this.options.easing) {
-            this.elapsedTime += this.frameRate;
+            this.elapsedTime += 1;
         } else {
             this.start = moveY;
         }
 
         if (this.direction === "up" && moveY > this.dest ||
             this.direction === "down" && moveY < this.dest) {
-            // window.requestAnimationFrame(ajl.util.proxy(this, this.doScroll));
-            window.setTimeout(ajl.util.proxy(this, this.doScroll), this.frameRate);
+            window.requestAnimationFrame(ajl.util.proxy(this, this.doScroll));
         } else {
             this.scrollFinish();
             return;
