@@ -231,6 +231,7 @@ ajl.Menu.prototype = {
 
             if (subMenu) {
                 menuItems[i].removeAttribute("aria-haspopup");
+                menuItems[i].removeAttribute("aria-controls");
                 subMenu.removeAttribute("tabindex");
                 subMenu.removeAttribute("aria-expanded");
                 subMenu.removeAttribute("aria-hidden");
@@ -290,6 +291,7 @@ ajl.Menu.prototype = {
             menuItems,
             subMenu,
             subMenuItems,
+            subMenuId,
             nSubMenuItems,
             menuId = 0,
             body = document.getElementsByTagName("body")[0];
@@ -342,6 +344,14 @@ ajl.Menu.prototype = {
             );
 
             if (subMenu) {
+                if (subMenu.id) {
+                    menuItems[i].setAttribute("aria-controls", subMenu.id);
+                } else {
+                    subMenuId = "AJL_MENU_" + Math.floor(Math.random() * 100000);
+                    menuItems[i].setAttribute("aria-controls", subMenuId);
+                    subMenu.id = subMenuId;
+                }
+
                 menuItems[i].setAttribute("aria-haspopup", "true");
                 subMenu.setAttribute("role", "menu");
                 subMenu.setAttribute("tabindex", "-1");
