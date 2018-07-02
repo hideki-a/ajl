@@ -17,6 +17,8 @@ ajl.HeightEqualizer = function (elem, options) {
         checkFontResize: true
     };
     this.breakPoints = null;
+    this.intervalId = null;
+    this.proxyFunction = null;
 
     this.options = ajl.util.deepExtend({}, this.defaults, options);
 };
@@ -139,6 +141,24 @@ ajl.HeightEqualizer.prototype = {
         this.breakPoints = breakPoints;
     },
 
+    destroy: function () {
+        var nElem = this.target.length,
+            i = 0;
+
+        while (i < nElem) {
+            this.target[i].style.height = 'auto';
+            i += 1;
+        }
+
+        ajl.event.remove(window, "load", this.proxyFunction, false);
+        ajl.event.remove(window, "resize", this.proxyFunction, false);
+        ajl.event.remove(window, "fontresize", this.proxyFunction, false);
+
+        if (this.options.checkFontResize) {
+            window.clearInterval(this.intervalId);
+        }
+    },
+
     init: function () {
         this.target = this.options.collect.call(this, this.parent);
 
@@ -146,15 +166,16 @@ ajl.HeightEqualizer.prototype = {
             this.defineGroupByVal();
         }
 
-        ajl.event.add(window, "load", ajl.util.proxy(this, this.doEqualize), false);
-        ajl.event.add(window, "resize", ajl.util.proxy(this, this.doEqualize), false);
-        ajl.event.add(window, "fontresize", ajl.util.proxy(this, this.doEqualize));
+        this.proxyFunction = ajl.util.proxy(this, this.doEqualize);
+        ajl.event.add(window, "load", this.proxyFunction, false);
+        ajl.event.add(window, "resize", this.proxyFunction, false);
+        ajl.event.add(window, "fontresize", this.proxyFunction);
 
         if (this.options.checkFontResize) {
             // テキストサイズのみの変更を監視
             this.docBody = document.getElementsByTagName("body")[0];
             this.fontSize = ajl.style.getPropValue(this.docBody, "fontSize");
-            window.setInterval(ajl.util.proxy(this, this.checkFontSize), 250);
+            this.intervalId = window.setInterval(ajl.util.proxy(this, this.checkFontSize), 250);
         }
     }
 };
