@@ -98,6 +98,10 @@ ajl.Tab.prototype = {
                 }
 
                 break;
+            case 13:
+                e.preventDefault();
+
+                this.tabPanels[this.activeTabNumber].focus();
         }
 
         if (typeof(tabNumber) === "number") {
