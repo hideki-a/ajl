@@ -33,15 +33,16 @@ ajl.SmoothScroll.prototype = {
     scrollFinish: function () {
         ajl.util.removeClass(this.bodyElem, "js-smoothscroll-scrolling");
 
-        if (this.options.moveFocus) {
-            // if (this.targetId === this.options.pagetopId) {
-            //     this.pagetopIdsChildNodes.focus();
-            // } else if (this.options.pageTop) {
-            if (this.options.pageTop) {
+        if (this.options.moveFocus && this.options.paddingTop) {
+            if (this.targetId === this.options.pagetopId) {
+                this.pagetopIdsChildNodes.focus();
+            } else if (this.options.pageTop) {
                 this.pagetopIdsChildNodes.focus();
             } else {
                 this.targetElem.focus();
             }
+        } else {
+            window.location.hash = this.targetId;
         }
     },
 
@@ -123,17 +124,21 @@ ajl.SmoothScroll.prototype = {
         this.bodyElem = document.getElementsByTagName("body")[0];
 
         if (!this.options.excludeCond.test(this.targetId) && this.targetElem) {
-            if (this.options.moveFocus) {
-                // if (this.targetId === this.options.pagetopId) {
-                //     this.pagetopIdsChildNodes = this.targetElem.children[0];
-                //     this.pagetopIdsChildNodes.setAttribute("tabindex", "-1");
-                // } else if (this.options.pageTop) {
-                if (this.options.pageTop) {
+            if (this.options.moveFocus && this.options.paddingTop) {
+                if (this.targetId === this.options.pagetopId) {
+                    this.pagetopIdsChildNodes = this.targetElem.children[0];
+                    this.pagetopIdsChildNodes.setAttribute("tabindex", "-1");
+                } else if (this.options.pageTop) {
                     pageTopElem = document.getElementById(this.options.pagetopId);
                     this.pagetopIdsChildNodes = pageTopElem.children[0];
                     this.pagetopIdsChildNodes.setAttribute("tabindex", "-1");
                 } else {
                     this.targetElem.setAttribute("tabindex", "-1");
+                }
+            } else if (this.options.moveFocus) {
+                if (this.options.pageTop) {
+                    pageTopElem = document.getElementById(this.options.pagetopId);
+                    this.pagetopIdsChildNodes = pageTopElem.children[0];
                 }
             }
 
