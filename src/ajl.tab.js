@@ -82,8 +82,8 @@ ajl.Tab.prototype = {
         var tabNumber = null;
 
         switch (e.keyCode) {
-            case 37:
-            case 38:
+            case ajl.def.keyCode.LEFT:
+            case ajl.def.keyCode.UP:
                 e.preventDefault();
 
                 if (this.activeTabNumber - 1 > -1) {
@@ -92,8 +92,8 @@ ajl.Tab.prototype = {
 
                 break;
 
-            case 39:
-            case 40:
+            case ajl.def.keyCode.RIGHT:
+            case ajl.def.keyCode.DOWN:
                 e.preventDefault();
 
                 if (this.activeTabNumber + 1 < this.nTabPanels) {
@@ -101,7 +101,7 @@ ajl.Tab.prototype = {
                 }
 
                 break;
-            case 13:
+            case ajl.def.keyCode.ENTER:
                 e.preventDefault();
 
                 this.tabPanels[this.activeTabNumber].focus();
