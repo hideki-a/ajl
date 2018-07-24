@@ -15,8 +15,11 @@ ajl.Tab = function (elem, options) {
     this.activeTabNumber = null;
     this.nTabPanels = null;
     this.defaults = {
+        tabEnabledClassName: ".tab-enabled",
         tabListClassName: ".tablist",
-        tabPanelsRootClassName: ".tabs"
+        tabListActiveClassName: ".active",
+        tabPanelsRootClassName: ".tabs",
+        tabPanelActiveClassName: ".active"
     };
 
     this.options = ajl.util.deepExtend({}, this.defaults, options);
@@ -40,10 +43,10 @@ ajl.Tab.prototype = {
     hide: function (tabNumber) {
         this.tabPanels[tabNumber].setAttribute("tabindex", -1);
         this.tabPanels[tabNumber].setAttribute("aria-hidden", "true");
-        ajl.util.removeClass(this.tabPanels[tabNumber], "active");
+        ajl.util.removeClass(this.tabPanels[tabNumber], this.options.tabPanelActiveClassName.replace(".", ""));
         this.tabList[tabNumber].setAttribute("tabindex", -1);
         this.tabList[tabNumber].setAttribute("aria-selected", "false");
-        ajl.util.removeClass(this.tabListItem[tabNumber], "active");
+        ajl.util.removeClass(this.tabListItem[tabNumber], this.options.tabListActiveClassName.replace(".", ""));
     },
 
     active: function (tab) {
@@ -61,10 +64,10 @@ ajl.Tab.prototype = {
 
         this.tabPanels[tabNumber].setAttribute("tabindex", 0);
         this.tabPanels[tabNumber].setAttribute("aria-hidden", "false");
-        ajl.util.addClass(this.tabPanels[tabNumber], "active");
+        ajl.util.addClass(this.tabPanels[tabNumber], this.options.tabPanelActiveClassName.replace(".", ""));
         this.tabList[tabNumber].setAttribute("tabindex", 0);
         this.tabList[tabNumber].setAttribute("aria-selected", "true");
-        ajl.util.addClass(this.tabListItem[tabNumber], "active");
+        ajl.util.addClass(this.tabListItem[tabNumber], this.options.tabListActiveClassName.replace(".", ""));
         this.activeTabNumber = tabNumber;
     },
 
@@ -142,7 +145,7 @@ ajl.Tab.prototype = {
         // 要素収集
         this.collectElem();
 
-        ajl.util.addClass(this.elem, "tab-enabled");
+        ajl.util.addClass(this.elem, this.options.tabEnabledClassName.replace(".", ""));
 
         // ul要素にrole="tablist"を付与
         this.tabListRoot.setAttribute("role", "tablist");

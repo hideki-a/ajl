@@ -7,33 +7,33 @@
 <title>ajl Tab</title>
 <link rel="stylesheet" href="css/basic.css">
 <style>
-.tab-enabled .tablist,
-.tab-enabled .tablist li{
+.TabSample-enabled .TabSample__tabList,
+.TabSample-enabled .TabSample__tabList li{
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
 
-.tab-enabled .tablist{
+.TabSample-enabled .TabSample__tabList{
 	padding: 0 10px;
 	border-bottom: 1px solid #999;
 }
 
-.tab-enabled .tablist li{
+.TabSample-enabled .TabSample__tabList li{
 	display: inline-block;
 	margin: 0 5px -1px 0;
 }
 
-.tab-enabled a{
+.TabSample-enabled a{
 	text-decoration: none;
 }
 
-.tab-enabled .tablist a{
+.TabSample-enabled .TabSample__tabList a{
 	display: block;
 	padding: 5px 11px;
 }
 
-.tab-enabled .tablist .active a{
+.TabSample-enabled .TabSample__tabList a[aria-selected=true]{
 	padding: 5px 10px;
 	border-width: 1px;
 	border-style: solid;
@@ -43,11 +43,11 @@
 	cursor: default;
 }
 
-.tab-enabled .tabs article{
+.TabSample-enabled .TabSample__tabs article{
 	display: none;
 }
 
-.tab-enabled .tabs article.active{
+.TabSample-enabled .TabSample__tabs article[aria-hidden=false]{
 	display: block;
 	-webkit-animation: fadeInFromNone 0.66s;
 	animation: fadeInFromNone 0.66s;
@@ -130,14 +130,14 @@
 <h1>ajl Tab</h1>
 </div><!-- /.page-header -->
 
-<div class="tabsample js-tab">
-<ul class="tablist"><!--
+<div class="TabSample">
+<ul class="TabSample__tabList"><!--
 --><li><a href="#html">HTML文書の設計</a></li><!--
 --><li><a href="#stylesheet">スタイルシートの設計</a></li><!--
 --><li><a href="#javascript">JavaScriptの設計</a></li><!--
 --></ul>
 
-<div class="tabs">
+<div class="TabSample__tabs">
 <article id="html">
 <h2>HTML文書の設計</h2>
 <p>サイトの各ページを構成するHTML文書について、また文書に記載する情報についてルールを定めています。</p>
@@ -152,8 +152,8 @@
 <h2>JavaScriptの設計</h2>
 <p>さまざまなふるまいの実現のために用いるJavaScriptの実装ルールを定めています。</p>
 </article>
-</div><!-- /.tabs -->
-</div><!-- /.tabsample -->
+</div><!-- /.TabSample__tabs -->
+</div><!-- /.TabSample -->
 </div><!-- /.container -->
 
 <footer role="contentinfo" class="docs-footer">
@@ -164,7 +164,13 @@
 <script src="../src/ajl.core.js"></script>
 <script src="../src/ajl.tab.js"></script>
 <script>
-ajl.enable.tab(".js-tab");
+ajl.enable.tab(".TabSample", {
+    tabEnabledClassName: ".TabSample-enabled",
+    tabListClassName: ".TabSample__tabList",
+    tabListActiveClassName: ".TabSample__tabListItem-active",
+    tabPanelsRootClassName: ".TabSample__tabs",
+    tabPanelActiveClassName: ".TabSample__tab-active"
+});
 </script>
 
 <!-- for Bootstrap Theme's scripts -->
