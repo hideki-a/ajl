@@ -46,8 +46,8 @@ ajl.Menu.prototype = {
             return;
         }
 
-        ajl.util.removeClass(openMenu.previousElementSibling, this.options.activeClassName);
-        ajl.util.removeClass(openMenu, this.options.activeClassName);
+        openMenu.previousElementSibling.classList.remove(this.options.activeClassName);
+        openMenu.classList.remove(this.options.activeClassName);
         openMenu.setAttribute("aria-expanded", "false");
         openMenu.setAttribute("aria-hidden", "true");
         this.timerId = null;
@@ -69,7 +69,7 @@ ajl.Menu.prototype = {
             openMenu;
 
         if (navigator.userAgent.indexOf("Android") > -1 &&
-            !ajl.util.hasClass(e.currentTarget, this.options.activeClassName)) {
+            !e.currentTarget.classList.contains(this.options.activeClassName)) {
             e.preventDefault();
         }
 
@@ -82,15 +82,15 @@ ajl.Menu.prototype = {
         if (this.stack.length > 0) {
             this.clearTimer();
             openMenu = this.stack.shift();
-            ajl.util.removeClass(openMenu.previousElementSibling, this.options.activeClassName);
-            ajl.util.removeClass(openMenu, this.options.activeClassName);
+            openMenu.previousElementSibling.classList.remove(this.options.activeClassName);
+            openMenu.classList.remove(this.options.activeClassName);
             openMenu.setAttribute("aria-expanded", "false");
             openMenu.setAttribute("aria-hidden", "true");
         }
 
         if (targetMenu) {
-            ajl.util.addClass(e.currentTarget, this.options.activeClassName);
-            ajl.util.addClass(targetMenu, this.options.activeClassName);
+            e.currentTarget.classList.add(this.options.activeClassName);
+            targetMenu.classList.add(this.options.activeClassName);
             targetMenu.setAttribute("aria-expanded", "true");
             targetMenu.setAttribute("aria-hidden", "false");
             this.stack.push(targetMenu);
@@ -193,7 +193,7 @@ ajl.Menu.prototype = {
             menuId = 0,
             body = document.getElementsByTagName("body")[0];
 
-        ajl.util.removeClass(this.elem, "ajl-menu-enabled");
+        this.elem.classList.remove("ajl-menu-enabled");
         menuItems = this.options.collect(this.generateId);
         this.elem.id = "";
         this.stack = [];
@@ -212,7 +212,7 @@ ajl.Menu.prototype = {
             //     menuItems[i].removeAttribute("tabindex");
             // }
 
-            if (ajl.util.hasClass(menuItems[i], "js-haschild")) {
+            if (menuItems[i].classList.contains("js-haschild")) {
                 menuItems[i].removeAttribute("tabindex");
             }
 
@@ -235,7 +235,7 @@ ajl.Menu.prototype = {
                 subMenu.removeAttribute("tabindex");
                 subMenu.removeAttribute("aria-expanded");
                 subMenu.removeAttribute("aria-hidden");
-                ajl.util.removeClass(subMenu, this.options.activeClassName);
+                subMenu.classList.remove(this.options.activeClassName);
                 ajl.event.remove(
                     menuItems[i],
                     "mouseout, blur",
@@ -296,7 +296,7 @@ ajl.Menu.prototype = {
             menuId = 0,
             body = document.getElementsByTagName("body")[0];
 
-        ajl.util.addClass(this.elem, "ajl-menu-enabled");
+        this.elem.classList.add("ajl-menu-enabled");
         this.elem.id = this.generateId;
         this.elem.setAttribute("role", "menu");
         menuItems = this.options.collect(this.generateId);
@@ -326,7 +326,7 @@ ajl.Menu.prototype = {
             //     menuItems[i].setAttribute("tabindex", "-1");
             // }
 
-            if (ajl.util.hasClass(menuItems[i], "js-haschild")) {
+            if (menuItems[i].classList.contains("js-haschild")) {
                 menuItems[i].setAttribute("tabindex", 0);
             }
 

@@ -105,47 +105,6 @@ ajl.util = {
         };
     },
 
-    addClass: function (elem, className) {
-        if (elem.classList) {
-            elem.classList.add(className);
-        } else {
-            elem.className += " " + className;
-        }
-    },
-
-    removeClass: function (elem, className) {
-        var before = elem.className,
-            after;
-
-        if (elem.classList) {
-            elem.classList.remove(className);
-        } else {
-            elem.className = elem.className.replace(
-                new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' '
-            );
-            // after = before.replace(
-            //     new RegExp("(^|\\b)" + className.split(" ").join("|") + "(\\b|$)", "gi"),
-            //     " "
-            // );
-
-            // if (before !== after) {
-            //     if (/\s+/.test(after)) {
-            //         elem.removeAttribute("class");
-            //     } else {
-            //         elem.className = after;
-            //     }
-            // }
-        }
-    },
-
-    hasClass: function (elem, className) {
-        if (elem.classList) {
-            return elem.classList.contains(className);
-        } else {
-            return new RegExp('(^| )' + className + '( |$)', 'gi').test(elem.className);
-        }
-    },
-
     getRunner: function (NewObj) {
         return function (className, options) {
             var elems = document.querySelectorAll(className),

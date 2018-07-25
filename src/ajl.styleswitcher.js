@@ -30,10 +30,10 @@ ajl.StyleSwitcher.prototype = {
     },
 
     _setActiveClass: function (afterElem, beforeElem) {
-        ajl.util.addClass(afterElem, "active");
+        afterElem.classList.add("active");
 
         if (beforeElem) {
-            ajl.util.removeClass(beforeElem, "active");
+            beforeElem.classList.remove("active");
         }
     },
 

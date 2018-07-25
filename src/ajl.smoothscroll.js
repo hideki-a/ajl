@@ -31,7 +31,7 @@ ajl.SmoothScroll = function (elem, options) {
 
 ajl.SmoothScroll.prototype = {
     scrollFinish: function () {
-        ajl.util.removeClass(this.bodyElem, "js-smoothscroll-scrolling");
+        this.bodyElem.classList.remove("js-smoothscroll-scrolling");
 
         if (this.options.moveFocus && this.options.paddingTop) {
             if (this.targetId === this.options.pagetopId) {
@@ -62,7 +62,7 @@ ajl.SmoothScroll.prototype = {
         }
 
         this.direction = (this.dest - this.start > 0) ? "down" : "up";
-        ajl.util.addClass(this.bodyElem, "js-smoothscroll-scrolling");
+        this.bodyElem.classList.add("js-smoothscroll-scrolling");
         this.doScroll();
     },
 

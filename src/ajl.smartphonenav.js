@@ -61,13 +61,13 @@ ajl.SmartphoneNav.prototype = {
 
         e.preventDefault();
 
-        if (ajl.util.hasClass(this.animateElem, this.options.hideClassName)) {
+        if (this.animateElem.classList.contains(this.options.hideClassName)) {
             // 非表示→表示
-            ajl.util.removeClass(this.animateElem, this.options.hideClassName);
-            ajl.util.addClass(this.animateElem, this.options.showClassName);
+            this.animateElem.classList.remove(this.options.hideClassName);
+            this.animateElem.classList.add(this.options.showClassName);
 
             if (this.options.direction === "horizontal") {
-                ajl.util.removeClass(this.menu, this.options.hideClassName);
+                this.menu.classList.remove(this.options.hideClassName);
             }
 
             if (this.options.direction === "vertical") {
@@ -85,8 +85,8 @@ ajl.SmartphoneNav.prototype = {
                 this.animateElem.style.maxHeight = "0";
             }
 
-            ajl.util.removeClass(this.animateElem, this.options.showClassName);
-            ajl.util.addClass(this.animateElem, this.options.closeAnimClassName);
+            this.animateElem.classList.remove(this.options.showClassName);
+            this.animateElem.classList.add(this.options.closeAnimClassName);
 
             this.menu.setAttribute("tabindex", "-1");
             this.btn.focus();
@@ -96,12 +96,12 @@ ajl.SmartphoneNav.prototype = {
     },
 
     onTransitionEnd: function () {
-        if (ajl.util.hasClass(this.animateElem, this.options.closeAnimClassName)) {
-            ajl.util.addClass(this.animateElem, this.options.hideClassName);
-            ajl.util.removeClass(this.animateElem, this.options.closeAnimClassName);
+        if (this.animateElem.classList.contains(this.options.closeAnimClassName)) {
+            this.animateElem.classList.add(this.options.hideClassName);
+            this.animateElem.classList.remove(this.options.closeAnimClassName);
 
             if (this.options.direction === "horizontal") {
-                ajl.util.addClass(this.menu, this.options.hideClassName);
+                this.menu.classList.add(this.options.hideClassName);
             }
         }
     },
@@ -111,13 +111,13 @@ ajl.SmartphoneNav.prototype = {
 
         if (this.options.direction === "horizontal") {
             this.animateElem = document.querySelector(this.options.animationTarget);
-            ajl.util.addClass(this.menu, this.options.hideClassName);
+            this.menu.classList.add(this.options.hideClassName);
         } else {
             this.animateElem = this.menu;
         }
 
-        ajl.util.addClass(this.animateElem, "js-menu-enable");
-        ajl.util.addClass(this.animateElem, this.options.hideClassName);
+        this.animateElem.classList.add("js-menu-enable");
+        this.animateElem.classList.add(this.options.hideClassName);
         ajl.event.add(
             this.animateElem,
             "webkitTransitionEnd, transitionend",
