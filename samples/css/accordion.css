@@ -1,0 +1,130 @@
+button {
+    line-height: 1.5;
+}
+
+.FAQList {
+    margin-bottom: 30px;
+    border-radius: 6px;
+    background-color: #f1f9fd;
+    box-shadow: 2px 2px 1px #ddd, -2px 2px 1px #ddd, 2px -2px 1px #ddd, -2px -2px 1px #ddd;
+}
+
+.FAQList .FAQList__title {
+    margin: 0;
+    font-weight: normal;
+}
+
+.FAQList .FAQList__title {
+    padding: 18px 60px 18px 30px;
+}
+
+.FAQList .FAQList__title button {
+    position: relative;
+    width: 100%;
+    border-width: 0;
+    border-bottom: 1px dashed #b9e0ec;
+    background: none;
+    text-align: left;
+}
+
+.FAQList .FAQList__title button::after {
+    position: absolute;
+    top: 20px;
+    content: "";
+    width: 20px;
+    height: 20px;
+    background: url(../images/icon_accordion.png) no-repeat left top;
+    line-height: 1;
+    color: #0060ae;
+    font-size: 1.25em;
+}
+
+.FAQList .FAQList__title button[aria-expanded="true"] {
+    border-bottom-width: 0;
+}
+
+.FAQList .FAQList__title button[aria-expanded="true"]::after {
+    background-position: left bottom;
+}
+
+.FAQList .FAQList__content {
+    margin: 0;
+    background-color: #fff;
+}
+
+.FAQList .FAQList__content > *:first-child {
+    margin-top: 0;
+}
+
+.FAQList .FAQList__content > *:last-child {
+    margin-bottom: 0;
+}
+
+.FAQList.FAQList-enabled .FAQList__content {
+    overflow-y: hidden;
+}
+
+.FAQList.FAQList-enabled .FAQList__content[aria-hidden="false"] {
+    animation-name: slideDown;
+    animation-duration: 2s;
+}
+
+.FAQList.FAQList-enabled .FAQList__content[aria-hidden="true"] {
+    display: none;
+}
+
+@keyframes slideDown {
+    from {
+        max-height: 0;
+    }
+    to {
+        max-height: 10000px;
+    }
+}
+
+.FAQList .FAQList__content[aria-hidden="false"] {
+    border-bottom: 1px dashed #b9e0ec;
+}
+
+.FAQList .FAQList__panel:first-child {
+    border-radius: 6px 6px 0 0;
+}
+
+.FAQList .FAQList__panel:first-child .FAQList__titlecontainer,
+.FAQList .FAQList__panel:first-child .FAQList__title,
+.FAQList .FAQList__panel:first-child .FAQList__title button {
+    border-radius: 6px 6px 0 0;
+}
+
+.FAQList .FAQList__panel:last-child {
+    border-radius: 0 0 6px 6px;
+}
+
+.FAQList .FAQList__panel:last-child .FAQList__title,
+.FAQList .FAQList__panel:last-child .FAQList__title button[aria-expanded="false"],
+.FAQList .FAQList__panel:last-child .FAQList__content {
+    border-bottom-width: 0;
+    border-radius: 0 0 6px 6px;
+}
+
+.FAQList .FAQList__title {
+    line-height: 1.444;
+    font-size: 1.125em;
+}
+
+.FAQList.FAQList-enabled .FAQList__title {
+    padding: 0;
+}
+
+.FAQList.FAQList-enabled .FAQList__title button {
+    padding: 18px 60px 18px 30px;
+    cursor: pointer;
+}
+
+.FAQList .FAQList__title button::after {
+    right: 30px;
+}
+
+.FAQList .FAQList__content {
+    padding: 18px 30px;
+}

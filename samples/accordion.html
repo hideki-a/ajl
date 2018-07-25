@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="css/basic.css">
+<link rel="stylesheet" href="css/accordion.css">
+<title>Accordion</title>
+</head>
+
+<body class="Page">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" href="./">ajl</a>
+</div>
+<div id="navbar" class="collapse navbar-collapse">
+<ul class="nav navbar-nav">
+<li><a href="./">Home</a></li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Plugins <span class="caret"></span></a>
+<ul class="dropdown-menu" role="menu">
+<li><a href="height_equalizer.html">要素の高さ揃え</a></li>
+<li><a href="tab.html">タブ</a></li>
+<li><a href="menu.html">メニュー</a></li>
+<li><a href="current_nav.html">ナビゲーションリストの現在地をアクティブにする</a></li>
+<li><a href="smooth_scroll.html">ページ内リンクをスムーズにスクロールする</a></li>
+<li><a href="social_buttons.html">ソーシャルボタンのロード</a></li>
+<li><a href="googlemap.html">Google Mapの表示</a></li>
+<li><a href="smartphonenav.html">スマートフォン向けナビゲーション</a></li>
+<li><a href="styleswitcher.html">スタイルスイッチャー</a></li>
+<li><a href="fontsizescaler.html">フォントサイズスケーラー</a></li>
+<li><a href="tellink.html">電話番号自動リンク変換</a></li>
+<li><a href="accordion.html">アコーディオン</a></li>
+</ul>
+</li>
+</ul>
+</div><!--/.nav-collapse -->
+</div>
+</nav>
+
+<div class="container">
+<div class="page-header">
+<h1>ajl Accordion</h1>
+</div><!-- /.page-header -->
+  <div class="FAQList">
+    <div class="FAQList__panel">
+      <h3 class="FAQList__title">記事の日時指定公開と同時に、本番環境に記事を同期できますか？</h3>
+      <div class="FAQList__content">
+        <p>可能です。記事の公開日時と同じ日時を本番環境の同期日時に設定すると、記事が公開されてから本番環境への同期が行われます。</p>
+        <p>※同期機能はプロフェッショナル版以上に含まれる、Copy2Public プラグインをインストールすることでご利用可能です。</p>
+      </div>
+    </div>
+    <div class="FAQList__panel">
+      <h3 class="FAQList__title">条件指定サイト内検索（AltSearch）とエンタープライズサーチ（PowerSearch）の違いは何ですか？</h3>
+      <div class="FAQList__content">
+        <p>条件指定サイト内検索（AltSearch）はすべてのエディションでご利用いただけるサイト内検索機能で、ダイナミックパブリッシング（PHP）を利用してデータベースに SQL 文を発行して検索を実行します。キーワード（カスタムフィールド対応）だけでなくカテゴリの AND OR 指定で検索が可能です。検索結果の表示順はデータベースの特定のキー（日付や文字列）の昇順または降順になります。</p>
+      </div>
+    </div>
+    <div class="FAQList__panel">
+      <h3 class="FAQList__title">Movable Type を運用するサーバと公開するサーバを別にすることは可能でしょうか？（ステージングサーバを経て公開したい）</h3>
+      <div class="FAQList__content">
+        <p>Professional エディション以上の PowerCMS で可能です。サーバ間の同期の実行は管理画面から実行（または予約）できます。</p>
+        <p>ただし、この機能は単純にファイルの同期のみですので、PowerCMS の動的動作部分がそのままでは使えなくなります（フォーム、コメント、トラックバック、検索やダイナミックパブリッシングなどデータベース接続が必要な機能）。</p>
+      </div>
+    </div>
+    <div class="FAQList__panel">
+      <h3 class="FAQList__title">ダイナミック検索（Altsearch）の処理スピードを上げる方法はありますか？</h3>
+      <div class="FAQList__content">
+        <p>いくつかの方法がありますが、解消しない場合サーバのスペックを上げることを検討ください。</p>
+        <ul>
+          <li>MySQL の設定を見直す（my.cnf）</li>
+          <li>memory_limit の値を上げる</li>
+          <li>検索結果をキャッシュするようにする</li>
+          <li>静的生成可能な部分をインデックス・アーカイブ化してインクルードするようにする、または逆に、 DynamicMTML で必要な部分だけ動的処理にする</li>
+          <li>テンプレートのモジュールインクルードを減らし、フラット化する</li>
+          <li>検索結果表示の各エントリ部分についても静的に書き出し、インクルードする（例えば、result/entry_&lt;$MTEntryID$&gt;.inc（静的ファイル）にしてインクルードするなど）</li>
+          <li>リレーション部分を見直す（タグ、カテゴリー情報、コメント、アイテム等の mt_entry テーブル以外のデータを使用する部分は負荷が高い）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="FAQList__panel">
+      <h3 class="FAQList__title">PowerCMS の最低限のスペックを教えてください。</h3>
+      <div class="FAQList__content">
+        <p>PowerCMS の最低限のスペックとしての「動作環境」は、Movable Type が動作すれば問題ないものとなります。</p>
+        <p>しかし PowerCMS は MT に比べ多くの機能が追加されておりますので、必然的に MT よりも高スペックなマシンでなければ「動作はするが、管理画面が遅い」ことになる恐れが高くなります。ある程度快適に動作する「推奨動作環境」は、下記をご参考ください。</p>
+      </div>
+    </div>
+  </div><!-- /.FAQList -->
+
+  <div class="FAQList">
+    <div class="FAQList__panel">
+      <h3 class="FAQList__title">バージョンアップ情報はどのように提供されますか？</h3>
+      <div class="FAQList__content">
+        <p>バージョンアップ情報は、PowerCMSメールマガジンにて提供いたします。サポートサイトに登録する際に、メールを受け取るチェックを入れてください。また、PowerCMS製品サイトやアルファサードのウェブサイトでも情報を提供いたします。</p>
+      </div>
+    </div>
+    <div class="FAQList__panel">
+      <h3 class="FAQList__title">カスタムフィールドの値で記事を絞り込む方法はありますか？</h3>
+      <div class="FAQList__content">
+        <p>下記の MT タグにモディファイアを指定する事で、カスタムフィールドの値で記事を絞り込むことができます。</p>
+        <ul>
+          <li>MTEntries</li>
+          <li>MTSearchEntryField</li>
+        </ul>
+      </div>
+    </div>
+    <div class="FAQList__panel">
+      <h3 class="FAQList__title">PowerCMSのパートナーになることを検討しています</h3>
+      <div class="FAQList__content">
+        <p>PowerCMS Partnerとは、弊社の製品を取り扱う法人または個人に対して行う支援制度です。</p>
+        <p>提案資料やクローズドな情報のご提供、ご登録者様との情報共有サイト開設など、お役立ていただける特典に加え、CMS構築案件のご紹介なども行います。</p>
+      </div>
+    </div>
+  </div><!-- /.FAQList -->
+</div><!-- /.container -->
+
+<footer role="contentinfo" class="docs-footer">
+<p>Code licensed under <a href="http://opensource.org/licenses/MIT" target="_blank">MIT</a>, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+</footer>
+
+<!-- load ajl -->
+<script src="../src/ajl.core.js"></script>
+<script src="../src/ajl.accordion.js"></script>
+<script>
+ajl.enable.accordion(".FAQList", {
+    titleClassName: ".FAQList__title",
+    contentClassName: ".FAQList__content",
+    enabledClassName: ".FAQList-enabled"
+});
+</script>
+
+<!-- for Bootstrap Theme's scripts -->
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>
