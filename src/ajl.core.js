@@ -87,11 +87,11 @@ ajl.util = {
             for (key in obj) {
                 if (obj.hasOwnProperty(key)) {
                     // ECMAScript 5.1では、typeof /s/ === 'object';
-                    // if (!/^\/.*\/$/.test(obj[key]) && typeof obj[key] === "object") {
-                    //     ajl.util.deepExtend(out[key], obj[key]);
-                    // } else {
+                    if (!/^\/.*\/$/.test(obj[key]) && typeof obj[key] === "object") {
+                        out[key] = ajl.util.deepExtend({}, out[key], obj[key]);
+                    } else {
                         out[key] = obj[key];
-                    // }
+                    }
                 }
             }
         }
