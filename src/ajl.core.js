@@ -1,7 +1,7 @@
 /*!
  * ajl
  *
- * Copyright 2015 Hideki Abe
+ * Copyright 2018 Hideki Abe
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
@@ -34,7 +34,7 @@ var ajl;
 
 if (!ajl) {
     ajl = window.ajl = {
-        version: "1.0.0"    // コアバージョン
+        version: "2.0.0"    // コアバージョン
     };
 }
 
