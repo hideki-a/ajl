@@ -105,6 +105,8 @@ ajl.Tab.prototype = {
                 e.preventDefault();
 
                 this.tabPanels[this.activeTabNumber].focus();
+
+                break;
         }
 
         if (typeof(tabNumber) === "number") {
@@ -184,11 +186,9 @@ ajl.Tab.prototype = {
             );
         }
 
-        if (!window.attachEvent && hash) {    // IE8以下ではURLにタブのハッシュが付いていても無視する
-            if (this.tabPanelsIds.indexOf(hash)) {
-                this.active(hash);
-                return;
-            }
+        if (this.tabPanelsIds.indexOf(hash)) {
+            this.active(hash);
+            return;
         }
 
         this.active(0);
