@@ -71,7 +71,7 @@ ajl.util = {
         return str.charAt(0).toLowerCase() + str.slice(1);
     },
 
-    makeIdStr(prefix) {
+    makeIdStr: function (prefix) {
         return prefix + Math.floor(Math.random() * (99999 - 10000) + 10000);
     },
 

@@ -27,6 +27,7 @@ browserSync = require 'browser-sync'
 reload = browserSync.reload
 jshintStylish = require 'jshint-stylish'
 minimist = require 'minimist'
+saveLicense = require('uglify-save-license');
 
 # CLI options
 # https://github.com/gulpjs/gulp/blob/master/docs/recipes/pass-arguments-from-cli.md
@@ -88,7 +89,8 @@ gulp.task 'build', ->
         .pipe gulp.dest PATHS.DIST
         .pipe plugins.rename 'ajl.custom.min.js'
         .pipe plugins.uglify
-            preserveComments: 'some'
+            output:
+                comments: saveLicense
         .pipe gulp.dest PATHS.DIST
 
 gulp.task 'watch', ->
