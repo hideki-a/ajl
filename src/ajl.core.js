@@ -193,31 +193,27 @@ ajl.event = {
             nEvents,
             i;
 
-        if (elem.addEventListener) {
-            if (type.indexOf(",") > -1) {
-                events = type.split(",");
-                for (i = 0, nEvents = events.length; i < nEvents; i += 1) {
-                    // String.prototype.trim(): IE9+
-                    // See Also: https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/String/trim
-                    if (elem === window &&
-                        events[i].trim() === "load" &&
-                        document.readyState === "complete") {
-                        listener();
-                    } else {
-                        elem.addEventListener(events[i].trim(), listener, useCapture);
-                    }
-                }
-            } else {
+        if (type.indexOf(",") > -1) {
+            events = type.split(",");
+            for (i = 0, nEvents = events.length; i < nEvents; i += 1) {
+                // String.prototype.trim(): IE9+
+                // See Also: https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/String/trim
                 if (elem === window &&
-                    type === "load" &&
+                    events[i].trim() === "load" &&
                     document.readyState === "complete") {
                     listener();
                 } else {
-                    elem.addEventListener(type, listener, useCapture);
+                    elem.addEventListener(events[i].trim(), listener, useCapture);
                 }
             }
-        } else if (elem.attachEvent) {
-            elem.attachEvent("on" + type, listener);
+        } else {
+            if (elem === window &&
+                type === "load" &&
+                document.readyState === "complete") {
+                listener();
+            } else {
+                elem.addEventListener(type, listener, useCapture);
+            }
         }
 
         if (type !== "unload") {
@@ -230,18 +226,14 @@ ajl.event = {
             nEvents,
             i;
 
-        if (elem.removeEventListener) {
-            if (type.indexOf(",") > -1) {
-                events = type.split(",");
-                for (i = 0, nEvents = events.length; i < nEvents; i += 1) {
-                    // Support IE9+
-                    elem.removeEventListener(events[i].trim(), listener, useCapture);
-                }
-            } else {
-                elem.removeEventListener(type, listener, useCapture);
+        if (type.indexOf(",") > -1) {
+            events = type.split(",");
+            for (i = 0, nEvents = events.length; i < nEvents; i += 1) {
+                // Support IE9+
+                elem.removeEventListener(events[i].trim(), listener, useCapture);
             }
-        } else if (elem.dettachEvent) {
-            elem.detachEvent("on" + type, listener);
+        } else {
+            elem.removeEventListener(type, listener, useCapture);
         }
     },
 
