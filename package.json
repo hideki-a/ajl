@@ -27,6 +27,7 @@
     "gulp-sass": "^4.0.1",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.1",
+    "jshint": "^2.9.5",
     "jshint-stylish": "^2.2.1",
     "minimist": "^1.1.0",
     "serve-static": "^1.8.1",
