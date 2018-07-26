@@ -186,7 +186,7 @@ ajl.Tab.prototype = {
             );
         }
 
-        if (hash && this.tabPanelsIds.indexOf(hash)) {
+        if (hash && this.tabPanelsIds.indexOf(hash.replace(/^#/, "")) > -1) {
             this.active(hash);
             return;
         }
