@@ -84,7 +84,12 @@ ajl.GoogleMap.prototype = {
             infoWindow,
             handler = function () {
                 self._ctrlInfoWindow(this, self);
-            };
+            },
+            closeHandler = function () {
+                 google.maps.event.addListenerOnce(self.markers[i], "click", function () {
+                    infoWindow.open(self.map, self.markers[i]);
+                });
+           };
 
         for (i = 0; i < nMarkers; i += 1) {
             latLng = new google.maps.LatLng(
@@ -110,11 +115,7 @@ ajl.GoogleMap.prototype = {
                 google.maps.event.addListener(
                     infoWindow,
                     "closeclick",
-                    function () {
-                        google.maps.event.addListenerOnce(this.markers[i], "click", function () {
-                            infoWindow.open(this.map, this.markers[i]);
-                        });
-                    }
+                    closeHandler
                 );
 
                 if (this.options.markers[i].openOnLoad) {

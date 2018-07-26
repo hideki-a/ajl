@@ -23,23 +23,24 @@ ajl.Accordion.prototype = {
     _togglePanel: function (e) {
         var buttonElem = e.target;
         var contentElem = buttonElem.closest(this.settings.titleClassName).nextElementSibling;
+        var newHiddenState = null;
 
         // 今までに開いている要素の処理
         if (this.stack.buttonElem && buttonElem !== this.stack.buttonElem) {
-            var newHiddenState = true;
+            newHiddenState = true;
             this.stack.buttonElem.setAttribute("aria-expanded", String(!newHiddenState));
-            this.stack.contentElem.setAttribute("aria-hidden", String(newHiddenState))
+            this.stack.contentElem.setAttribute("aria-hidden", String(newHiddenState));
         }
 
         // クリックしたボタンに関連する要素の処理
         if (contentElem.getAttribute("aria-hidden") === "true") {
-            var newHiddenState = false;
+            newHiddenState = false;
             buttonElem.setAttribute("aria-expanded", String(!newHiddenState));
             contentElem.setAttribute("aria-hidden", String(newHiddenState));
             this.stack.buttonElem = buttonElem;
             this.stack.contentElem = contentElem;
         } else {
-            var newHiddenState = true;
+            newHiddenState = true;
             buttonElem.setAttribute("aria-expanded", String(!newHiddenState));
             contentElem.setAttribute("aria-hidden", String(newHiddenState));
             this.stack.buttonElem = null;
