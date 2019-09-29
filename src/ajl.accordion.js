@@ -7,10 +7,13 @@
 ajl.Accordion = function (elem, options) {
     this.elem = elem;
     this.stack = {
+        containerElem: null,
         buttonElem: null,
         contentElem: null
     };
     this.defaults = {
+        containerClassName: ".container",
+        containerActiveClassName: ".-is-active",
         titleClassName: ".title",
         contentClassName: ".content",
         enabledClassName: ".enable"
@@ -22,12 +25,14 @@ ajl.Accordion = function (elem, options) {
 ajl.Accordion.prototype = {
     _togglePanel: function (e) {
         var buttonElem = e.target;
+        var containerElem = buttonElem.closest(this.settings.containerClassName);
         var contentElem = buttonElem.closest(this.settings.titleClassName).nextElementSibling;
         var newHiddenState = null;
 
         // 今までに開いている要素の処理
         if (this.stack.buttonElem && buttonElem !== this.stack.buttonElem) {
             newHiddenState = true;
+            this.stack.containerElem.classList.remove(this.settings.containerActiveClassName.replace(/^./, ""))
             this.stack.buttonElem.setAttribute("aria-expanded", String(!newHiddenState));
             this.stack.contentElem.setAttribute("aria-hidden", String(newHiddenState));
         }
@@ -35,14 +40,18 @@ ajl.Accordion.prototype = {
         // クリックしたボタンに関連する要素の処理
         if (contentElem.getAttribute("aria-hidden") === "true") {
             newHiddenState = false;
+            containerElem.classList.add(this.settings.containerActiveClassName.replace(/^./, ""))
             buttonElem.setAttribute("aria-expanded", String(!newHiddenState));
             contentElem.setAttribute("aria-hidden", String(newHiddenState));
+            this.stack.containerElem = containerElem;
             this.stack.buttonElem = buttonElem;
             this.stack.contentElem = contentElem;
         } else {
             newHiddenState = true;
+            containerElem.classList.remove(this.settings.containerActiveClassName.replace(/^./, ""))
             buttonElem.setAttribute("aria-expanded", String(!newHiddenState));
             contentElem.setAttribute("aria-hidden", String(newHiddenState));
+            this.stack.containerElem = null;
             this.stack.buttonElem = null;
             this.stack.contentElem = null;
         }
