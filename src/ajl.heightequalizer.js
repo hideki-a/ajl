@@ -129,6 +129,10 @@ ajl.HeightEqualizer.prototype = {
         var groupBySetting = this.options.groupBy,
             breakPoints = [];
 
+        if (!(groupBySetting instanceof Array)) {
+            return;
+        }
+
         groupBySetting.forEach(function (setting) {
             breakPoints.push(setting.maxWidth);
         });
