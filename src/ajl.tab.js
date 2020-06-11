@@ -17,9 +17,7 @@ ajl.Tab = function (elem, options) {
     this.defaults = {
         tabEnabledClassName: ".tab-enabled",
         tabListClassName: ".tablist",
-        tabListActiveClassName: ".active",
-        tabPanelsRootClassName: ".tabs",
-        tabPanelActiveClassName: ".active"
+        tabPanelsRootClassName: ".tabs"
     };
 
     this.options = ajl.util.deepExtend({}, this.defaults, options);
@@ -43,10 +41,8 @@ ajl.Tab.prototype = {
     hide: function (tabNumber) {
         this.tabPanels[tabNumber].setAttribute("tabindex", -1);
         this.tabPanels[tabNumber].setAttribute("aria-hidden", "true");
-        this.tabPanels[tabNumber].classList.remove(this.options.tabPanelActiveClassName.replace(".", ""));
         this.tabList[tabNumber].setAttribute("tabindex", -1);
         this.tabList[tabNumber].setAttribute("aria-selected", "false");
-        this.tabListItem[tabNumber].classList.remove(this.options.tabListActiveClassName.replace(".", ""));
     },
 
     active: function (tab) {
@@ -64,10 +60,8 @@ ajl.Tab.prototype = {
 
         this.tabPanels[tabNumber].setAttribute("tabindex", 0);
         this.tabPanels[tabNumber].setAttribute("aria-hidden", "false");
-        this.tabPanels[tabNumber].classList.add(this.options.tabPanelActiveClassName.replace(/^./, ""));
         this.tabList[tabNumber].setAttribute("tabindex", 0);
         this.tabList[tabNumber].setAttribute("aria-selected", "true");
-        this.tabListItem[tabNumber].classList.add(this.options.tabListActiveClassName.replace(/^./, ""));
         this.activeTabNumber = tabNumber;
     },
 
