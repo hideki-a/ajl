@@ -47,7 +47,8 @@ ajl.Tab.prototype = {
     },
 
     active: function (tab) {
-        var tabNumber;
+        var tabNumber,
+            hash;
 
         if (this.activeTabNumber !== null) {
             this.hide(this.activeTabNumber);
@@ -66,9 +67,10 @@ ajl.Tab.prototype = {
         this.activeTabNumber = tabNumber;
 
         if (this.elem.id) {
+            hash = typeof(tab) === "number" ? '#' + this.tabPanels[tabNumber].id : tab;
             window.sessionStorage.setItem(
                 'ajl_tab_' + this.elem.id + '_active_tab',
-                tab
+                hash
             );
         }
     },
