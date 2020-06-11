@@ -64,6 +64,13 @@ ajl.Tab.prototype = {
         this.tabList[tabNumber].setAttribute("tabindex", 0);
         this.tabList[tabNumber].setAttribute("aria-selected", "true");
         this.activeTabNumber = tabNumber;
+
+        if (this.elem.id) {
+            window.sessionStorage.setItem(
+                'ajl_tab_' + this.elem.id + '_active_tab',
+                tab
+            );
+        }
     },
 
     activeHandler: function (e) {
@@ -180,7 +187,8 @@ ajl.Tab.prototype = {
     init: function () {
         var i,
             tab,
-            hash = location.hash;
+            hash = location.hash,
+            savedHash;
 
         this.methodStack.activeHandler = ajl.util.proxy(this, this.activeHandler);
         this.methodStack.keydownHandler = ajl.util.proxy(this, this.keydownHandler);
@@ -229,6 +237,12 @@ ajl.Tab.prototype = {
 
         if (hash && this.tabPanelsIds.indexOf(hash.replace(/^#/, "")) > -1) {
             this.active(hash);
+            return;
+        }
+
+        savedHash = window.sessionStorage.getItem('ajl_tab_' + this.elem.id + '_active_tab');
+        if (savedHash && this.elem.id) {
+            this.active(savedHash);
             return;
         }
 
