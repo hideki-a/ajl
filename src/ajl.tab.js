@@ -14,6 +14,7 @@ ajl.Tab = function (elem, options) {
     this.tabPanelsIds = [];
     this.activeTabNumber = null;
     this.nTabPanels = null;
+    this.methodStack = [];
     this.defaults = {
         tabEnabledClassName: ".tab-enabled",
         tabListClassName: ".tablist",
@@ -133,11 +134,57 @@ ajl.Tab.prototype = {
         }
     },
 
+    destroy: function () {
+        var i,
+            tab;
+
+        this.elem.classList.remove(this.options.tabEnabledClassName.replace(".", ""));
+
+        // ul要素にrole="tablist"を付与
+        this.tabListRoot.removeAttribute("role");
+
+        // タブを包含する要素にrole="presentation"を付与
+        this.tabPanelsRoot.removeAttribute("role");
+
+        // li要素にrole="presentation"を付与
+        for (i = 0; i < this.nTabPanels; i += 1) {
+            this.tabListItem[i].removeAttribute("role");
+        }
+
+        for (i = 0; i < this.nTabPanels; i += 1) {
+            tab = this.tabPanels[i];
+            tab.removeAttribute("tabindex");
+            tab.removeAttribute("role");
+            tab.removeAttribute("aria-hidden");
+
+            this.tabList[i].removeAttribute("role");
+            this.tabList[i].removeAttribute("tabindex");
+            this.tabList[i].removeAttribute("aria-controls");
+            this.tabList[i].removeAttribute("aria-selected");
+
+            ajl.event.remove(
+                this.tabList[i],
+                "click",
+                this.methodStack.activeHandler,
+                false
+            );
+            ajl.event.remove(
+                this.tabList[i],
+                "keydown",
+                this.methodStack.keydownHandler,
+                false
+            );
+        }
+    },
+
     init: function () {
         var i,
             tab,
             hash = location.hash;
 
+        this.methodStack.activeHandler = ajl.util.proxy(this, this.activeHandler);
+        this.methodStack.keydownHandler = ajl.util.proxy(this, this.keydownHandler);
+        
         // 要素収集
         this.collectElem();
 
@@ -169,13 +216,13 @@ ajl.Tab.prototype = {
             ajl.event.add(
                 this.tabList[i],
                 "click",
-                ajl.util.proxy(this, this.activeHandler),
+                this.methodStack.activeHandler,
                 false
             );
             ajl.event.add(
                 this.tabList[i],
                 "keydown",
-                ajl.util.proxy(this, this.keydownHandler),
+                this.methodStack.keydownHandler,
                 false
             );
         }

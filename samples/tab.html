@@ -86,6 +86,10 @@
 		opacity: 1;
 	}
 }
+
+.mod-destroy{
+    margin-bottom: 30px;
+}
 </style>
 </head>
 
@@ -131,6 +135,10 @@
 <h1>ajl Tab</h1>
 </div><!-- /.page-header -->
 
+<div class="mod-destroy">
+<button id="btn_destroy">destroy</button> <button id="btn_reinit">Re Init</button>
+</div>
+
 <div class="TabSample">
 <ul class="TabSample__tabList"><!--
 --><li><a href="#html">HTML文書の設計</a></li><!--
@@ -165,11 +173,19 @@
 <script src="../src/ajl.core.js"></script>
 <script src="../src/ajl.tab.js"></script>
 <script>
-ajl.enable.tab(".TabSample", {
+var objTab = ajl.enable.tab(".TabSample", {
     tabEnabledClassName: ".TabSample-enabled",
     tabListClassName: ".TabSample__tabList",
     tabPanelsRootClassName: ".TabSample__tabs"
 });
+var btndestroy = document.getElementById("btn_destroy");
+var btnReInit = document.getElementById("btn_reinit");
+btndestroy.addEventListener("click", function () {
+    objTab[0].destroy();
+}, false);
+btnReInit.addEventListener("click", function () {
+    objTab[0].init();
+}, false);
 </script>
 
 <!-- for Bootstrap Theme's scripts -->
