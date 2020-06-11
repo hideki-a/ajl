@@ -18,7 +18,10 @@ ajl.Tab = function (elem, options) {
     this.defaults = {
         tabEnabledClassName: ".tab-enabled",
         tabListClassName: ".tablist",
-        tabPanelsRootClassName: ".tabs"
+        tabPanelsRootClassName: ".tabs",
+        tabListAnchorsCollector: function (parent) {
+            return parent.getElementsByTagName("a");
+        }
     };
 
     this.options = ajl.util.deepExtend({}, this.defaults, options);
@@ -131,7 +134,7 @@ ajl.Tab.prototype = {
 
         this.tabListRoot = tabListRoot[0];
         this.tabListItem = this.tabListRoot.getElementsByTagName("li");
-        this.tabList = this.tabListRoot.getElementsByTagName("a");
+        this.tabList = this.options.tabListAnchorsCollector(this.tabListRoot);
         this.tabPanelsRoot = this.elem.querySelector(this.options.tabPanelsRootClassName);
         this.tabPanels = this.tabPanelsRoot.children;
 
