@@ -32,7 +32,7 @@ ajl.Accordion.prototype = {
         // 今までに開いている要素の処理
         if (this.stack.buttonElem && buttonElem !== this.stack.buttonElem) {
             newHiddenState = true;
-            this.stack.containerElem.classList.remove(this.settings.containerActiveClassName.replace(/^./, ""))
+            this.stack.containerElem.classList.remove(this.settings.containerActiveClassName.replace(/^./, ""));
             this.stack.buttonElem.setAttribute("aria-expanded", String(!newHiddenState));
             this.stack.contentElem.setAttribute("aria-hidden", String(newHiddenState));
         }
@@ -40,7 +40,7 @@ ajl.Accordion.prototype = {
         // クリックしたボタンに関連する要素の処理
         if (contentElem.getAttribute("aria-hidden") === "true") {
             newHiddenState = false;
-            containerElem.classList.add(this.settings.containerActiveClassName.replace(/^./, ""))
+            containerElem.classList.add(this.settings.containerActiveClassName.replace(/^./, ""));
             buttonElem.setAttribute("aria-expanded", String(!newHiddenState));
             contentElem.setAttribute("aria-hidden", String(newHiddenState));
             this.stack.containerElem = containerElem;
@@ -48,7 +48,7 @@ ajl.Accordion.prototype = {
             this.stack.contentElem = contentElem;
         } else {
             newHiddenState = true;
-            containerElem.classList.remove(this.settings.containerActiveClassName.replace(/^./, ""))
+            containerElem.classList.remove(this.settings.containerActiveClassName.replace(/^./, ""));
             buttonElem.setAttribute("aria-expanded", String(!newHiddenState));
             contentElem.setAttribute("aria-hidden", String(newHiddenState));
             this.stack.containerElem = null;
