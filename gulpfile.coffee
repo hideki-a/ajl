@@ -39,15 +39,16 @@ options = minimist process.argv.slice(2), knownOptions;
 
 # Tasks
 gulp.task 'serve', ->
-    browserSync
+    browserSync.init
         server:
             baseDir: BASEPATH
         port: PORT
         browser: 'google chrome'
         startPath: PATHS.STATIC.SRC
+        files: PATHS.STATIC.SRC
     return
 
-gulp.task 'styles', ->
+gulp.task 'styles', (done) ->
     gulp.src(PATHS.STYLES.SRC + '*.scss')
         .pipe plugins.sourcemaps.init()
         .pipe plugins.sass
@@ -57,8 +58,10 @@ gulp.task 'styles', ->
             browsers: AUTOPREFIXER_BROWSERS
         .pipe plugins.sourcemaps.write('.')
         .pipe gulp.dest(PATHS.STYLES.DEST)
+    browserSync.reload()
+    done()
 
-gulp.task 'jshint', ->
+gulp.task 'jshint', (done) ->
     gulp.src PATHS.SCRIPTS.SRC + '*.js'
         .pipe plugins.jshint()
         .pipe plugins.jshint.reporter(jshintStylish)
@@ -74,6 +77,8 @@ gulp.task 'jshint', ->
             ).join('\n')
             file.relative + ' (' + file.jshint.results.length + ' errors)\n' + errors
         )
+    browserSync.reload()
+    done()
 
 gulp.task 'build', ->
     now = new Date()
@@ -93,13 +98,9 @@ gulp.task 'build', ->
                 comments: saveLicense
         .pipe gulp.dest PATHS.DIST
 
-gulp.task 'watch', ->
-    gulp.watch PATHS.STATIC.SRC + '*.html', browserSync.reload
-    gulp.watch PATHS.STYLES.SRC + '*.scss', ['styles', browserSync.reload]
-    gulp.watch PATHS.SCRIPTS.SRC + '*.js', ['jshint', browserSync.reload]
-    return
+gulp.task 'watch', (done) ->
+    gulp.watch PATHS.STYLES.SRC + '*.scss', gulp.series('styles')
+    gulp.watch PATHS.SCRIPTS.SRC + '*.js', gulp.series('jshint')
+    done()
 
-gulp.task 'default', [
-    'serve'
-    'watch'
-]
+gulp.task 'default', gulp.series('watch', 'serve')
