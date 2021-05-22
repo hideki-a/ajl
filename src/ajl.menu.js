@@ -164,7 +164,8 @@ ajl.Menu.prototype = {
             }
         } else if (e.keyCode === nextRootKey) {
             if (e.target.getAttribute("role") === "menuitem") {
-                arrayIndex = this.firstLevelMenuItems.indexOf(menuId);
+                const parentId = parseInt(e.target.dataset.parent, 10) || menuId;
+                arrayIndex = this.firstLevelMenuItems.indexOf(parentId);
                 nextFocusId = this.firstLevelMenuItems[arrayIndex + 1];
                 if (nextFocusId) {
                     this.hideMenu();
@@ -173,7 +174,8 @@ ajl.Menu.prototype = {
             }
         } else if (e.keyCode === prevRootKey) {
             if (e.target.getAttribute("role") === "menuitem") {
-                arrayIndex = this.firstLevelMenuItems.indexOf(menuId);
+                const parentId = parseInt(e.target.dataset.parent, 10) || menuId;
+                arrayIndex = this.firstLevelMenuItems.indexOf(parentId);
                 nextFocusId = this.firstLevelMenuItems[arrayIndex - 1];
                 if (nextFocusId > -1) {
                     this.hideMenu();
@@ -292,6 +294,12 @@ ajl.Menu.prototype = {
                     subMenuItems[j].removeAttribute("tabindex");
                     subMenuItems[j].parentNode.removeAttribute("role");
                     subMenuItems[j].removeAttribute("role");
+                    ajl.event.remove(
+                        subMenuItems[j],
+                        "keydown",
+                        this.methodStack.keydown,
+                        false
+                    );
                 }
             }
         }
@@ -331,7 +339,6 @@ ajl.Menu.prototype = {
             menuItems[i].parentNode.setAttribute("role", "none");
             menuItems[i].setAttribute("role", "menuitem");
             menuItems[i].setAttribute("data-item", menuId);
-            menuId += 1;
             subMenu = menuItems[i].parentNode.tagName.toLowerCase() === "em" ?
                         menuItems[i].parentNode.nextElementSibling :
                         menuItems[i].nextElementSibling;
@@ -407,13 +414,22 @@ ajl.Menu.prototype = {
                 }
 
                 subMenuItems = subMenu.querySelectorAll("li a");
+                const parentId = menuId;
                 for (j = 0, nSubMenuItems = subMenuItems.length; j < nSubMenuItems; j += 1) {
+                    menuId += 1;
                     subMenuItems[j].setAttribute("tabindex", "-1");
                     subMenuItems[j].setAttribute("role", "menuitem");
                     subMenuItems[j].setAttribute("data-item", menuId);
-                    menuId += 1;
+                    subMenuItems[j].setAttribute("data-parent", parentId);
+                    ajl.event.add(
+                        subMenuItems[j],
+                        "keydown",
+                        this.methodStack.keydown,
+                        false
+                    );
                 }
             }
+            menuId += 1;
         }
     }
 };
