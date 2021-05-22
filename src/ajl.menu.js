@@ -184,6 +184,32 @@ ajl.Menu.prototype = {
                     this.focusMenu(nextFocusId);
                 }
             }
+        } else if (e.keyCode === ajl.def.keyCode.SPACE || e.keyCode === ajl.def.keyCode.ENTER) {
+            // nextChildKeyの場合とほぼ同じ
+            if ((e.target.parentNode.tagName.toLowerCase() === "em" && e.target.parentNode.nextElementSibling.tagName.toLowerCase() === "ul") ||
+                (e.target.nextElementSibling && e.target.nextElementSibling.tagName.toLowerCase() === "ul")) {
+                e.preventDefault();
+
+                if (this.stack.length === 0) {
+                    this.showMenu(e);
+                }
+
+                nextFocusId = menuId + 1;
+                this.focusMenu(nextFocusId);
+                this.clearTimer(true);
+            } else {
+                if (e.keyCode === ajl.def.keyCode.SPACE) {
+                    e.target.click();
+                }
+            }
+        } else if (e.keyCode === ajl.def.keyCode.ESCAPE) {
+            e.preventDefault();
+
+            if (e.target.getAttribute("role") === "menuitem") {
+                rootMenuId = !isNaN(parentId) ? parentId : menuId;
+                this.hideMenu();
+                this.focusMenu(rootMenuId);
+            }
         }
     },
 

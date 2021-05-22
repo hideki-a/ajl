@@ -58,7 +58,8 @@ ajl.def = {
         PAGE_UP: 33,
         SPACE: 32,
         TAB: 9,
-        ENTER: 13
+        ENTER: 13,
+        ESCAPE: 27
     }
 };
 
