@@ -343,6 +343,7 @@ ajl.Menu.prototype = {
             subMenuId,
             nSubMenuItems,
             menuId = 0,
+            parentId,
             body = document.getElementsByTagName("body")[0];
 
         this.elem.classList.add("ajl-menu-enabled");
@@ -442,7 +443,7 @@ ajl.Menu.prototype = {
                 }
 
                 subMenuItems = subMenu.querySelectorAll("li a");
-                const parentId = menuId;
+                parentId = menuId;
                 for (j = 0, nSubMenuItems = subMenuItems.length; j < nSubMenuItems; j += 1) {
                     menuId += 1;
                     subMenuItems[j].setAttribute("tabindex", "-1");
