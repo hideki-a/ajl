@@ -98,8 +98,9 @@ ajl.Menu.prototype = {
     },
 
     focusMenu: function (id) {
-        var selector = "#" + this.generateId + " a[data-item='" + id + "'], " +
-                        "#" + this.generateId + " .js-haschild[data-item='" + id + "']";
+        var menuId = this.elem.id.indexOf('AJL') > -1 ? this.generateId : this.elem.id;
+        var selector = "#" + menuId + " a[data-item='" + id + "'], " +
+                        "#" + menuId + " .js-haschild[data-item='" + id + "']";
         var nextFocusItem = document.querySelector(selector);
         nextFocusItem.focus();
     },
@@ -194,8 +195,10 @@ ajl.Menu.prototype = {
             body = document.getElementsByTagName("body")[0];
 
         this.elem.classList.remove("ajl-menu-enabled");
-        menuItems = this.options.collect(this.generateId);
-        this.elem.id = "";
+        menuItems = this.options.collect(this.elem.id ? this.elem.id : this.generateId);
+        if (this.elem.id.indexOf('AJL') > -1) {
+            this.elem.id = "";
+        }
         this.stack = [];
 
         ajl.event.remove(
@@ -236,6 +239,9 @@ ajl.Menu.prototype = {
                 subMenu.removeAttribute("aria-expanded");
                 subMenu.removeAttribute("aria-hidden");
                 subMenu.classList.remove(this.options.activeClassName);
+                if (subMenu.id.indexOf('AJL') > -1) {
+                    subMenu.removeAttribute("id");
+                }
                 ajl.event.remove(
                     menuItems[i],
                     "mouseout, blur",
@@ -297,9 +303,9 @@ ajl.Menu.prototype = {
             body = document.getElementsByTagName("body")[0];
 
         this.elem.classList.add("ajl-menu-enabled");
-        this.elem.id = this.generateId;
+        this.elem.id = this.elem.id ? this.elem.id : this.generateId;
         this.elem.setAttribute("role", "menu");
-        menuItems = this.options.collect(this.generateId);
+        menuItems = this.options.collect(this.elem.id ? this.elem.id : this.generateId);
 
         this.methodStack.show = ajl.util.proxy(this, this.showMenu);
         this.methodStack.hide = ajl.util.proxy(this, this.hideMenuHandler);
