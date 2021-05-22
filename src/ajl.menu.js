@@ -228,7 +228,7 @@ ajl.Menu.prototype = {
         this.elem.removeAttribute("role");
         menuItems = this.options.collect(this.elem.id ? this.elem.id : this.generateId);
         if (this.elem.id.indexOf('AJL') > -1) {
-            this.elem.id = "";
+            this.elem.removeAttribute("id");
         }
         this.stack = [];
 
@@ -322,6 +322,8 @@ ajl.Menu.prototype = {
                     subMenuItems[j].removeAttribute("tabindex");
                     subMenuItems[j].parentNode.removeAttribute("role");
                     subMenuItems[j].removeAttribute("role");
+                    delete subMenuItems[j].dataset.item;
+                    delete subMenuItems[j].dataset.parent;
                     ajl.event.remove(
                         subMenuItems[j],
                         "keydown",
