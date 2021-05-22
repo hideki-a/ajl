@@ -108,6 +108,8 @@ ajl.Menu.prototype = {
     keydownEventHandler: function (e) {
         var elem,
             menuId = parseInt(e.target.getAttribute("data-item"), 10),
+            parentId = parseInt(e.target.dataset.parent, 10),
+            rootMenuId,
             arrayIndex,
             nextFocusId,
             nextRootKey,
@@ -164,8 +166,8 @@ ajl.Menu.prototype = {
             }
         } else if (e.keyCode === nextRootKey) {
             if (e.target.getAttribute("role") === "menuitem") {
-                const parentId = parseInt(e.target.dataset.parent, 10) || menuId;
-                arrayIndex = this.firstLevelMenuItems.indexOf(parentId);
+                rootMenuId = !isNaN(parentId) ? parentId : menuId;
+                arrayIndex = this.firstLevelMenuItems.indexOf(rootMenuId);
                 nextFocusId = this.firstLevelMenuItems[arrayIndex + 1];
                 if (nextFocusId) {
                     this.hideMenu();
@@ -174,8 +176,8 @@ ajl.Menu.prototype = {
             }
         } else if (e.keyCode === prevRootKey) {
             if (e.target.getAttribute("role") === "menuitem") {
-                const parentId = parseInt(e.target.dataset.parent, 10) || menuId;
-                arrayIndex = this.firstLevelMenuItems.indexOf(parentId);
+                rootMenuId = !isNaN(parentId) ? parentId : menuId;
+                arrayIndex = this.firstLevelMenuItems.indexOf(rootMenuId);
                 nextFocusId = this.firstLevelMenuItems[arrayIndex - 1];
                 if (nextFocusId > -1) {
                     this.hideMenu();
