@@ -195,6 +195,7 @@ ajl.Menu.prototype = {
             body = document.getElementsByTagName("body")[0];
 
         this.elem.classList.remove("ajl-menu-enabled");
+        this.elem.removeAttribute("role");
         menuItems = this.options.collect(this.elem.id ? this.elem.id : this.generateId);
         if (this.elem.id.indexOf('AJL') > -1) {
             this.elem.id = "";
@@ -214,6 +215,9 @@ ajl.Menu.prototype = {
             // if (i > 0) {
             //     menuItems[i].removeAttribute("tabindex");
             // }
+
+            menuItems[i].parentNode.removeAttribute("role");
+            menuItems[i].removeAttribute("role");
 
             if (menuItems[i].classList.contains("js-haschild")) {
                 menuItems[i].removeAttribute("tabindex");
@@ -236,6 +240,7 @@ ajl.Menu.prototype = {
                 menuItems[i].removeAttribute("aria-haspopup");
                 menuItems[i].removeAttribute("aria-controls");
                 subMenu.removeAttribute("tabindex");
+                subMenu.removeAttribute("role");
                 subMenu.removeAttribute("aria-expanded");
                 subMenu.removeAttribute("aria-hidden");
                 subMenu.classList.remove(this.options.activeClassName);
@@ -285,6 +290,8 @@ ajl.Menu.prototype = {
                 subMenuItems = subMenu.querySelectorAll("li a");
                 for (j = 0, nSubMenuItems = subMenuItems.length; j < nSubMenuItems; j += 1) {
                     subMenuItems[j].removeAttribute("tabindex");
+                    subMenuItems[j].parentNode.removeAttribute("role");
+                    subMenuItems[j].removeAttribute("role");
                 }
             }
         }
@@ -304,7 +311,7 @@ ajl.Menu.prototype = {
 
         this.elem.classList.add("ajl-menu-enabled");
         this.elem.id = this.elem.id ? this.elem.id : this.generateId;
-        this.elem.setAttribute("role", "menu");
+        this.elem.setAttribute("role", "menubar");
         menuItems = this.options.collect(this.elem.id ? this.elem.id : this.generateId);
 
         this.methodStack.show = ajl.util.proxy(this, this.showMenu);
@@ -321,6 +328,7 @@ ajl.Menu.prototype = {
 
         for (i = 0, nItems = menuItems.length; i < nItems; i += 1) {
             this.firstLevelMenuItems.push(menuId);
+            menuItems[i].parentNode.setAttribute("role", "none");
             menuItems[i].setAttribute("role", "menuitem");
             menuItems[i].setAttribute("data-item", menuId);
             menuId += 1;
@@ -359,6 +367,7 @@ ajl.Menu.prototype = {
                 }
 
                 menuItems[i].setAttribute("aria-haspopup", "true");
+                subMenu.parentNode.setAttribute("role", "none");
                 subMenu.setAttribute("role", "menu");
                 subMenu.setAttribute("tabindex", "-1");
                 subMenu.setAttribute("aria-expanded", "false");
@@ -400,6 +409,7 @@ ajl.Menu.prototype = {
                 subMenuItems = subMenu.querySelectorAll("li a");
                 for (j = 0, nSubMenuItems = subMenuItems.length; j < nSubMenuItems; j += 1) {
                     subMenuItems[j].setAttribute("tabindex", "-1");
+                    subMenuItems[j].setAttribute("role", "menuitem");
                     subMenuItems[j].setAttribute("data-item", menuId);
                     menuId += 1;
                 }
