@@ -47,8 +47,8 @@ ajl.Menu.prototype = {
         }
 
         openMenu.previousElementSibling.classList.remove(this.options.activeClassName);
+        openMenu.previousElementSibling.setAttribute("aria-expanded", "false");
         openMenu.classList.remove(this.options.activeClassName);
-        openMenu.setAttribute("aria-expanded", "false");
         openMenu.setAttribute("aria-hidden", "true");
         this.timerId = null;
     },
@@ -83,15 +83,15 @@ ajl.Menu.prototype = {
             this.clearTimer();
             openMenu = this.stack.shift();
             openMenu.previousElementSibling.classList.remove(this.options.activeClassName);
+            openMenu.previousElementSibling.setAttribute("aria-expanded", "false");
             openMenu.classList.remove(this.options.activeClassName);
-            openMenu.setAttribute("aria-expanded", "false");
             openMenu.setAttribute("aria-hidden", "true");
         }
 
         if (targetMenu) {
             e.currentTarget.classList.add(this.options.activeClassName);
+            e.currentTarget.setAttribute("aria-expanded", "true");
             targetMenu.classList.add(this.options.activeClassName);
-            targetMenu.setAttribute("aria-expanded", "true");
             targetMenu.setAttribute("aria-hidden", "false");
             this.stack.push(targetMenu);
         }
@@ -248,6 +248,7 @@ ajl.Menu.prototype = {
 
             menuItems[i].parentNode.removeAttribute("role");
             menuItems[i].removeAttribute("role");
+            menuItems[i].removeAttribute("aria-expanded");
 
             if (menuItems[i].classList.contains("js-haschild")) {
                 menuItems[i].removeAttribute("tabindex");
@@ -405,10 +406,10 @@ ajl.Menu.prototype = {
                 }
 
                 menuItems[i].setAttribute("aria-haspopup", "true");
+                menuItems[i].setAttribute("aria-expanded", "false");
                 subMenu.parentNode.setAttribute("role", "none");
                 subMenu.setAttribute("role", "menu");
                 subMenu.setAttribute("tabindex", "-1");
-                subMenu.setAttribute("aria-expanded", "false");
                 subMenu.setAttribute("aria-hidden", "true");
                 ajl.event.add(
                     menuItems[i],
