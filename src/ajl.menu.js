@@ -249,6 +249,7 @@ ajl.Menu.prototype = {
             menuItems[i].parentNode.removeAttribute("role");
             menuItems[i].removeAttribute("role");
             menuItems[i].removeAttribute("aria-expanded");
+            delete menuItems[i].dataset.item;
 
             if (menuItems[i].classList.contains("js-haschild")) {
                 menuItems[i].removeAttribute("tabindex");
