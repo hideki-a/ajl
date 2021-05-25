@@ -408,7 +408,6 @@ ajl.Menu.prototype = {
 
                 menuItems[i].setAttribute("aria-haspopup", "true");
                 menuItems[i].setAttribute("aria-expanded", "false");
-                subMenu.parentNode.setAttribute("role", "none");
                 subMenu.setAttribute("role", "menu");
                 subMenu.setAttribute("tabindex", "-1");
                 subMenu.setAttribute("aria-hidden", "true");
@@ -451,6 +450,7 @@ ajl.Menu.prototype = {
                 for (j = 0, nSubMenuItems = subMenuItems.length; j < nSubMenuItems; j += 1) {
                     menuId += 1;
                     subMenuItems[j].setAttribute("tabindex", "-1");
+                    subMenuItems[j].parentNode.setAttribute("role", "none");
                     subMenuItems[j].setAttribute("role", "menuitem");
                     subMenuItems[j].setAttribute("data-item", menuId);
                     subMenuItems[j].setAttribute("data-parent", parentId);
