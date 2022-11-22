@@ -11,7 +11,7 @@
   "author": "Hideki Abe",
   "license": "MIT",
   "devDependencies": {
-    "browser-sync": "^2.26.14",
+    "browser-sync": "^2.27.10",
     "coffee-script": "^1.8.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
